@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Análisis de Progreso Keto — con Logo</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body{font-family:'Inter',sans-serif;background:#f3f4f6}
+    .card{background:#fff;border-radius:1.25rem;box-shadow:0 10px 20px rgba(2,6,23,.08);padding:1rem}
+    .header-bg{background:linear-gradient(135deg,#10b981,#059669)}
+    .stat{background:rgba(255,255,255,.18);backdrop-filter:blur(8px);border-radius:1rem;color:#fff}
+    .chart-wrap{position:relative;height:18rem}
+    @media (min-width:640px){.chart-wrap{height:20rem}}
+    @media (min-width:1024px){.chart-wrap{height:22rem}}
+    .badge{position:absolute;right:.75rem;top:.75rem;background:#064e3b;color:#ecfdf5;border:1px solid #065f46;border-radius:9999px;padding:.4rem .75rem;font-weight:700;font-size:.8rem}
+  </style>
+</head>
+<body class="text-slate-800">
+
+  <!-- Header con logotipo -->
+  <header class="header-bg text-white px-4 sm:px-8 md:px-16 py-6 md:py-10 rounded-b-[2.5rem] shadow-xl">
+    <div class="flex items-center gap-4 md:gap-6">
+      <img src="https://i.postimg.cc/d0dTJTR2/logo.png" alt="Logo Goplemmings" class="w-24 sm:w-32 md:w-40 rounded-lg shadow-md object-contain" />
+      <div class="flex-1">
+        <h1 class="text-2xl sm:text-4xl md:text-5xl font-extrabold leading-tight">Tu Viaje Keto: Éxitos, Metas y Motivación</h1>
+        <p class="text-sm sm:text-base md:text-lg opacity-90 mt-1">Del 1 de julio al 18 de agosto de 2025 — Evolución con comentarios y tips</p>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mt-6">
+      <div class="stat p-4 text-center">
+        <p class="text-2xl sm:text-3xl font-extrabold">−12.3 kg</p>
+        <p class="text-xs uppercase tracking-wide opacity-90">Peso perdido</p>
+      </div>
+      <div class="stat p-4 text-center">
+        <p class="text-2xl sm:text-3xl font-extrabold">7 semanas</p>
+        <p class="text-xs uppercase tracking-wide opacity-90">Constancia</p>
+      </div>
+      <div class="stat p-4 text-center">
+        <p class="text-2xl sm:text-3xl font-extrabold">−3.9</p>
+        <p class="text-xs uppercase tracking-wide opacity-90">Puntos de IMC</p>
+      </div>
+      <div class="stat p-4 text-center">
+        <p class="text-2xl sm:text-3xl font-extrabold">Grado II</p>
+        <p class="text-xs uppercase tracking-wide opacity-90">Estado actual IMC</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="container mx-auto px-4 pb-16 -mt-6 sm:-mt-8">
+
+    <!-- Fechas clave -->
+    <section class="card mt-6">
+      <h2 class="text-xl sm:text-2xl font-bold mb-3">Fechas clave (peso — kg)</h2>
+      <div class="flex overflow-x-auto gap-2 pb-2">
+        <span class="shrink-0 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-full px-3 py-1 text-sm">01 Jul · <strong>135.6</strong></span>
+        <span class="shrink-0 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-full px-3 py-1 text-sm">08 Jul · <strong>130.7</strong></span>
+        <span class="shrink-0 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-full px-3 py-1 text-sm">14 Jul · <strong>129.6</strong></span>
+        <span class="shrink-0 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-full px-3 py-1 text-sm">21 Jul · <strong>129.1</strong></span>
+        <span class="shrink-0 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-full px-3 py-1 text-sm">28 Jul · <strong>127.6</strong></span>
+        <span class="shrink-0 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-full px-3 py-1 text-sm">04 Ago · <strong>126.1</strong></span>
+        <span class="shrink-0 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-full px-3 py-1 text-sm">11 Ago · <strong>124.2</strong></span>
+        <span class="shrink-0 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-full px-3 py-1 text-sm">18 Ago · <strong>123.3</strong></span>
+      </div>
+    </section>
+
+    <!-- Gráficas -->
+    <section class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
+      <!-- Peso (grande, con badge de kilos perdidos) -->
+      <div class="card lg:col-span-2">
+        <div class="flex items-center justify-between mb-2">
+          <h3 class="text-lg sm:text-xl font-bold">Evolución de tu Peso (kg)</h3>
+          <span class="text-xs text-gray-500">Responsive · móvil y escritorio</span>
+        </div>
+        <div class="chart-wrap">
+          <span class="badge">Total perdido: −12.3 kg</span>
+          <canvas id="weightChart"></canvas>
+        </div>
+        <p class="mt-3 text-sm text-gray-600"><strong>Comentario:</strong> La primera semana bajaste <strong>casi 5 kg</strong> — típico inicio keto por pérdida de glucógeno/agua y alta adherencia. El ritmo posterior es más estable: excelente para proteger la piel y consolidar hábitos.</p>
+      </div>
+
+      <!-- IMC (más chica y diferente: barra horizontal) -->
+      <div class="card">
+        <h3 class="text-lg sm:text-xl font-bold mb-2">IMC: inicio vs. actual</h3>
+        <div class="relative h-48"><canvas id="imcChart"></canvas></div>
+        <p class="mt-2 text-sm text-gray-600">Has pasado de <strong>42.8</strong> (Obesidad grado III) a <strong>38.9</strong> (grado II). La barrera de <strong>35</strong> (grado I) se ve alcanzable con tu tendencia actual.</p>
+      </div>
+    </section>
+
+    <!-- Comentarios por semana -->
+    <section class="card mt-6">
+      <h2 class="text-xl sm:text-2xl font-bold mb-3 text-center">Comentarios Semana a Semana</h2>
+      <div class="space-y-3">
+        <div class="bg-amber-50 border-l-4 border-amber-400 rounded-md p-3">1–8 julio: Bajaste casi 5 kg. Efecto inicial (glucógeno/agua) + inicio de cetosis. <strong>Arranque espectacular</strong>.</div>
+        <div class="bg-amber-50 border-l-4 border-amber-400 rounded-md p-3">8–14 julio: −1.1 kg. Estabilización normal; continúas a la baja.</div>
+        <div class="bg-amber-50 border-l-4 border-amber-400 rounded-md p-3">14–21 julio: −0.5 kg. Semana lenta pero <strong>sin rebote</strong>, mantienes tendencia.</div>
+        <div class="bg-amber-50 border-l-4 border-amber-400 rounded-md p-3">21–28 julio: −1.5 kg. Señal de constancia; gran manejo de comidas.</div>
+        <div class="bg-amber-50 border-l-4 border-amber-400 rounded-md p-3">28 jul–4 ago: −1.5 kg y <strong>IMC &lt; 40</strong>. Dejas obesidad mórbida atrás.</div>
+        <div class="bg-amber-50 border-l-4 border-amber-400 rounded-md p-3">4–11 ago: −1.9 kg. El ayuno intermitente te potenció.</div>
+        <div class="bg-amber-50 border-l-4 border-amber-400 rounded-md p-3">11–18 ago: −0.9 kg. Superaste <strong>123.7 kg</strong>, tu mínimo del año. Consistencia real.</div>
+      </div>
+    </section>
+
+    <!-- Metas -->
+    <section class="card mt-6">
+      <h3 class="text-xl sm:text-2xl font-extrabold mb-3">Metas y Progreso</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <ul class="space-y-2 text-sm">
+          <li class="flex items-center gap-2"><span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-emerald-100 text-emerald-700">✓</span>Bajar de <strong>130 kg</strong> — conseguido.</li>
+          <li class="flex items-center gap-2"><span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-emerald-100 text-emerald-700">✓</span>Perder más de <strong>10 kg</strong> — conseguido (−12.3 kg).</li>
+          <li class="flex items-center gap-2"><span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-emerald-100 text-emerald-700">✓</span>No subir de peso y mantener tendencia — <em>logro continuo</em>.</li>
+          <li class="flex items-center gap-2"><span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-emerald-100 text-emerald-700">✓</span>Romper <strong>123.700</strong> (mínimo del año) — conseguido.</li>
+        </ul>
+        <ul class="space-y-2 text-sm">
+          <li class="flex items-center gap-2"><span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-slate-200 text-slate-700">•</span>Próxima meta: <strong>&lt; 120 kg</strong>.</li>
+          <li class="flex items-center gap-2"><span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-slate-200 text-slate-700">•</span>Luego: <strong>&lt; 115 kg</strong> y <strong>&lt; 110 kg</strong> (hitos cada 5 kg).</li>
+          <li class="flex items-center gap-2"><span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-slate-200 text-slate-700">•</span>Consolidar 2–3 sesiones/sem de <strong>elíptica</strong> o <strong>videos de bajo impacto</strong> (15–30 min).</li>
+          <li class="flex items-center gap-2"><span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-slate-200 text-slate-700">•</span>Mantener ayuno 2×/sem con buena hidratación/electrolitos.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Tips extras -->
+    <section class="card mt-6">
+      <h3 class="text-xl sm:text-2xl font-bold mb-2">Tips extras para acelerar y sentirte mejor</h3>
+      <ul class="list-disc list-inside text-sm space-y-1 text-slate-700">
+        <li>Agua + pizca de sal o electrolitos sin azúcar en ayuno y antes del ejercicio.</li>
+        <li>Prioriza proteína diaria (~1.6–2.0 g/kg de peso objetivo) para proteger músculo y piel.</li>
+        <li>Camina 10–15 min después de 1–2 comidas para estabilidad de glucosa.</li>
+        <li>2–3 sesiones/sem de fuerza o resistencia ligera (bandas, peso corporal).</li>
+        <li>Duerme 7–8 h: la falta de sueño dispara el apetito y frena la pérdida.</li>
+        <li>Si rompes ayuno de 24 h: primero caldo/aceitunas/aguacate, luego comida principal.</li>
+        <li>Controla “keto snacks”: mejor úsalos como postre ocasional, no como comida.</li>
+      </ul>
+    </section>
+
+    <!-- Bloque motivacional final (ampliado) -->
+    <section class="mt-6">
+      <div class="card bg-gradient-to-r from-emerald-50 to-emerald-100 border border-emerald-200">
+        <p class="text-base sm:text-lg md:text-xl font-bold">Mensaje para ti:</p>
+        <p class="mt-1 text-sm sm:text-base">
+          Vas <strong>muy bien</strong>. No cualquiera logra bajar <strong>más de 12 kilos</strong> en siete semanas manteniendo la calma, la constancia y aprendiendo del proceso.
+          Tu disciplina ya se nota en el espejo, en la ropa más holgada y en tu energía. Estás construyendo hábitos que se quedan contigo.
+        </p>
+        <p class="mt-2 text-sm sm:text-base">
+          Cuando dudes, recuerda: <em>lo difícil no es empezar, es sostener</em>. Y tú ya demostraste que puedes sostenerlo.
+          Nadie te regaló estos números: los ganaste día a día. Lo que viene es mejor: nuevas marcas, nueva fuerza, nueva confianza.
+        </p>
+        <p class="mt-2 text-sm sm:text-base italic font-medium">
+          “Paso a paso, kilo a kilo. Eres consistente, y la consistencia siempre gana.”
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="bg-slate-900 text-white text-center py-6 rounded-t-[2rem]">
+    <p class="text-sm opacity-80">Hecho para Goplemmings — Agosto 2025</p>
+  </footer>
+
+  <script>
+    // Peso (línea)
+    const labels = ['1 Jul','8 Jul','14 Jul','21 Jul','28 Jul','4 Ago','11 Ago','18 Ago'];
+    const pesos  = [135.6,130.7,129.6,129.1,127.6,126.1,124.2,123.3];
+
+    const ctxW = document.getElementById('weightChart').getContext('2d');
+    new Chart(ctxW, {
+      type: 'line',
+      data: {
+        labels,
+        datasets: [{
+          label: 'Peso (kg)',
+          data: pesos,
+          borderColor: '#059669',
+          backgroundColor: 'rgba(5,150,105,.12)',
+          pointBackgroundColor: '#059669',
+          borderWidth: 3,
+          pointRadius: 4,
+          pointHoverRadius: 6,
+          tension: .35,
+          fill: true
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction:{mode:'nearest',intersect:false},
+        scales:{
+          y:{grid:{color:'rgba(2,6,23,.06)'}},
+          x:{grid:{display:false}}
+        },
+        plugins:{legend:{display:false}}
+      }
+    });
+
+    // IMC (barra horizontal, compacta)
+    const ctxI = document.getElementById('imcChart').getContext('2d');
+    new Chart(ctxI, {
+      type: 'bar',
+      data: {
+        labels: ['IMC inicio 42.8','IMC actual 38.9'],
+        datasets: [{
+          data: [42.8,38.9],
+          backgroundColor: ['#ef4444','#22c55e'],
+          borderColor: ['#b91c1c','#15803d'],
+          borderWidth: 1,
+          borderRadius: 8
+        }]
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
+        scales:{
+          x:{grid:{color:'rgba(2,6,23,.06)'}},
+          y:{grid:{display:false}}
+        },
+        plugins:{legend:{display:false}}
+      }
+    });
+  </script>
+</body>
+</html>
