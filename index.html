@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análisis de Progreso Keto</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inter Font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+        .card {
+            background-color: white;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+        }
+        .header-bg {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+        .stat-card {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            padding: 1rem;
+            color: white;
+        }
+        .comment-box {
+            background: #fef9c3;
+            border-left: 4px solid #facc15;
+            padding: 1rem;
+            border-radius: 0.75rem;
+            margin-bottom: 1rem;
+        }
+        .quote-card {
+            background-color: #e0f2fe;
+            border-left: 5px solid #3b82f6;
+            border-radius: 0.75rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div class="header-bg text-white py-10 px-6 sm:px-12 md:px-24 rounded-b-[3rem] shadow-xl">
+        <h1 class="text-4xl sm:text-5xl font-extrabold text-center mb-2">Tu Viaje Keto: Éxito en Cifras</h1>
+        <p class="text-center text-lg sm:text-xl font-light mb-8 opacity-80">Un vistazo visual y motivador de tu proceso</p>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+            <div class="stat-card">
+                <p class="text-4xl font-bold">12.3 kg</p>
+                <p class="text-sm opacity-80 mt-1">Peso perdido</p>
+            </div>
+            <div class="stat-card">
+                <p class="text-4xl font-bold">7 Semanas</p>
+                <p class="text-sm opacity-80 mt-1">De constancia</p>
+            </div>
+            <div class="stat-card">
+                <p class="text-4xl font-bold">3.9 pts</p>
+                <p class="text-sm opacity-80 mt-1">Reducción IMC</p>
+            </div>
+            <div class="stat-card">
+                <p class="text-4xl font-bold">Grado II</p>
+                <p class="text-sm opacity-80 mt-1">Nuevo estado IMC</p>
+            </div>
+        </div>
+    </div>
+
+    <main class="container mx-auto px-4 py-8 -mt-10">
+
+        <!-- Gráficas adaptables -->
+        <div class="grid grid-cols-1 gap-8 mb-8">
+            <section class="card h-80 md:h-96">
+                <h2 class="text-xl md:text-2xl font-bold mb-4">Evolución de tu Peso (kg)</h2>
+                <canvas id="weightChart"></canvas>
+            </section>
+            <section class="card h-80 md:h-96">
+                <h2 class="text-xl md:text-2xl font-bold mb-4">Cambio en tu IMC</h2>
+                <canvas id="imcChart"></canvas>
+            </section>
+        </div>
+
+        <!-- Comentarios por semana -->
+        <section class="mb-8">
+            <h2 class="text-2xl md:text-3xl font-bold mb-6 text-center">Comentarios Semana a Semana</h2>
+            <div class="space-y-4">
+                <div class="comment-box">1-8 julio: Bajaste casi 5 kg. Esto fue un efecto inicial de pérdida de líquidos e inicio de cetosis. ¡Un arranque espectacular!</div>
+                <div class="comment-box">8-14 julio: Bajada más moderada (–1.1 kg), tu cuerpo se estabilizó pero siguió respondiendo.</div>
+                <div class="comment-box">14-21 julio: Bajaste –0.5 kg. Semana más lenta, pero lo importante es que <strong>no subiste</strong> y mantuviste la tendencia.</div>
+                <div class="comment-box">21-28 julio: Recuperaste ritmo (–1.5 kg). Señal de constancia y buen manejo de la dieta.</div>
+                <div class="comment-box">28 jul–4 ago: De nuevo –1.5 kg. Aquí lograste bajar del IMC de 40, saliendo de la obesidad mórbida.</div>
+                <div class="comment-box">4–11 ago: Bajas –1.9 kg. El ayuno intermitente dio frutos y tu cuerpo lo reflejó con fuerza.</div>
+                <div class="comment-box">11–19 ago: Bajaste –0.9 kg. Aunque más lento, ¡superaste la barrera de 123.7 kg, tu mínimo del año!</div>
+            </div>
+        </section>
+
+        <!-- Sección de Metas -->
+        <section class="mb-8">
+            <h2 class="text-2xl md:text-3xl font-bold mb-6 text-center">Metas Alcanzadas y por Alcanzar</h2>
+            <ul class="list-disc list-inside text-lg space-y-2">
+                <li>Bajar de 130 kg ✅</li>
+                <li>Perder más de 10 kg ✅</li>
+                <li>No subir de peso y mantener tendencia ✅</li>
+                <li>Romper barrera de 123.7 kg (peso más bajo del año) ✅</li>
+                <li>Bajar de 120 kg 🔜</li>
+                <li>Bajar de 115 kg</li>
+                <li>Bajar de 110 kg</li>
+                <li>Incluir ejercicio de elíptica o videos de bajo impacto</li>
+                <li>Mejorar tono muscular para acompañar la pérdida de peso</li>
+            </ul>
+        </section>
+
+        <!-- Frase final motivadora -->
+        <section class="mb-8 text-center">
+            <div class="quote-card p-6">
+                <p class="text-lg md:text-xl font-medium italic">“Tu constancia te está transformando. Cada kilo perdido es una victoria hacia la vida que mereces.”</p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-800 text-white text-center py-6 mt-12 rounded-t-[3rem]">
+        <p class="text-sm opacity-75">¡Sigue así! Estás inspirando a tu propio futuro.</p>
+    </footer>
+
+    <script>
+        // Datos de peso
+        const pesoData = {
+            labels: ['1 Jul', '8 Jul', '14 Jul', '21 Jul', '28 Jul', '4 Ago', '11 Ago', '19 Ago'],
+            datasets: [{
+                label: 'Peso (kg)',
+                data: [135.6, 130.7, 129.6, 129.1, 127.6, 126.1, 124.2, 123.3],
+                borderColor: '#059669',
+                backgroundColor: 'rgba(5, 150, 105, 0.1)',
+                borderWidth: 3,
+                pointBackgroundColor: '#059669',
+                pointRadius: 5,
+                tension: 0.3,
+                fill: true,
+            }]
+        };
+
+        // Datos de IMC
+        const imcData = {
+            labels: ['1 Jul (42.8)', '19 Ago (38.9)'],
+            datasets: [{
+                data: [42.8, 38.9],
+                backgroundColor: ['#ef4444', '#22c55e'],
+                borderWidth: 1,
+            }]
+        };
+
+        const chartOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+        };
+
+        window.onload = function() {
+            new Chart(document.getElementById('weightChart'), {
+                type: 'line',
+                data: pesoData,
+                options: chartOptions
+            });
+
+            new Chart(document.getElementById('imcChart'), {
+                type: 'bar',
+                data: imcData,
+                options: chartOptions
+            });
+        };
+    </script>
+</body>
+</html>
