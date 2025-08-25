@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Goplemmings dieta Keto</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body{font-family:'Inter',sans-serif;background:#f3f4f6}
+    .card{background:#fff;border-radius:1.25rem;box-shadow:0 10px 20px rgba(2,6,23,.08);padding:1rem}
+    .header-bg{background:linear-gradient(135deg,#10b981,#059669)}
+    .stat{background:rgba(255,255,255,.18);backdrop-filter:blur(8px);border-radius:1rem;color:#fff}
+    .chart-wrap{position:relative;height:18rem}
+    @media (min-width:640px){.chart-wrap{height:20rem}}
+    @media (min-width:1024px){.chart-wrap{height:22rem}}
+    .badge{position:absolute;right:.75rem;top:.75rem;background:#064e3b;color:#ecfdf5;border:1px solid #065f46;border-radius:9999px;padding:.4rem .75rem;font-weight:700;font-size:.8rem}
+    .dot{display:inline-flex;align-items:center;justify-content:center;height:1.5rem;width:1.5rem;border-radius:9999px;background:#e2e8f0;color:#0f172a;font-weight:700}
+  </style>
+</head>
+<body class="text-slate-800">
+
+  <!-- Header con logotipo -->
+  <header class="header-bg text-white px-4 sm:px-8 md:px-16 py-6 md:py-10 rounded-b-[2.5rem] shadow-xl">
+    <div class="flex items-center gap-4 md:gap-6">
+      <img src="https://i.postimg.cc/d0dTJTR2/logo.png" alt="Logo Goplemmings" class="w-24 sm:w-32 md:w-40 rounded-lg shadow-md object-contain" />
+      <div class="flex-1">
+        <h1 class="text-2xl sm:text-4xl md:text-5xl font-extrabold leading-tight">Goplemmings dieta Keto</h1>
+        <p class="text-sm sm:text-base md:text-lg opacity-90 mt-1">Del 1 de julio al 25 de agosto de 2025 — Evolución con comentarios y tips</p>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mt-6">
+      <div class="stat p-4 text-center">
+        <p class="text-2xl sm:text-3xl font-extrabold">−12.8 kg</p>
+        <p class="text-xs uppercase tracking-wide opacity-90">Peso perdido</p>
+      </div>
+      <div class="stat p-4 text-center">
+        <p class="text-2xl sm:text-3xl font-extrabold">8 semanas</p>
+        <p class="text-xs uppercase tracking-wide opacity-90">Constancia</p>
+      </div>
+      <div class="stat p-4 text-center">
+        <p class="text-2xl sm:text-3xl font-extrabold">−4.1</p>
+        <p class="text-xs uppercase tracking-wide opacity-90">Puntos de IMC</p>
+      </div>
+      <div class="stat p-4 text-center">
+        <p class="text-2xl sm:text-3xl font-extrabold">Grado II</p>
+        <p class="text-xs uppercase tracking-wide opacity-90">Estado actual IMC</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="container mx-auto px-4 pb-16 -mt-6 sm:-mt-8">
+
+    <!-- Fechas clave -->
+    <section class="card mt-6">
+      <h2 class="text-xl sm:text-2xl font-bold mb-3">Fechas clave (peso — kg)</h2>
+      <div class="flex overflow-x-auto gap-2 pb-2">
+        <span class="shrink-0 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-full px-3 py-1 text-sm">01 Jul · <strong>135.6</strong></span>
+        <span class="shrink-0 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-full px-3 py-1 text-sm">08 Jul · <strong>130.7</strong></span>
+        <span class="shrink-0 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-full px-3 py-1 text-sm">14 Jul · <strong>129.6</strong></span>
+        <span class="shrink-0 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-full px-3 py-1 text-sm">21 Jul · <strong>129.1</strong></span>
+        <span class="shrink-0 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-full px-3 py-1 text-sm">28 Jul · <strong>127.6</strong></span>
+        <span class="shrink-0 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-full px-3 py-1 text-sm">04 Ago · <strong>126.1</strong></span>
+        <span class="shrink-0 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-full px-3 py-1 text-sm">11 Ago · <strong>124.2</strong></span>
+        <span class="shrink-0 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-full px-3 py-1 text-sm">18 Ago · <strong>123.3</strong></span>
+        <span class="shrink-0 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-full px-3 py-1 text-sm">25 Ago · <strong>122.8</strong></span>
+      </div>
+    </section>
+
+    <!-- Gráficas -->
+    <section class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
+      <!-- Peso -->
+      <div class="card lg:col-span-2">
+        <div class="flex items-center justify-between mb-2">
+          <h3 class="text-lg sm:text-xl font-bold">Evolución de tu Peso (kg)</h3>
+          <span class="text-xs text-gray-500">Responsive · móvil y escritorio</span>
+        </div>
+        <div class="chart-wrap">
+          <span class="badge">Total perdido: −12.8 kg</span>
+          <canvas id="weightChart"></canvas>
+        </div>
+        <p class="mt-3 text-sm text-gray-600"><strong>Comentario:</strong> Esta semana bajaste <strong>500 gramos</strong>. Es una pérdida menor, pero muy valiosa: confirma que mantienes dirección y adherencia.</p>
+      </div>
+
+      <!-- IMC -->
+      <div class="card">
+        <h3 class="text-lg sm:text-xl font-bold mb-2">IMC: inicio vs. actual</h3>
+        <div class="relative h-48"><canvas id="imcChart"></canvas></div>
+        <p class="mt-2 text-sm text-gray-600">De <strong>42.8</strong> (Obesidad grado III) a <strong>38.7</strong> (grado II). La meta de <strong>&lt;35</strong> (grado I) se acerca.</p>
+      </div>
+    </section>
+
+    <!-- Comentarios por semana + análisis -->
+    <section class="card mt-6">
+      <h2 class="text-xl sm:text-2xl font-bold mb-3 text-center">Comentarios Semana a Semana</h2>
+      <div class="space-y-3">
+        <div class="bg-amber-50 border-l-4 border-amber-400 rounded-md p-3">1–8 julio: Bajaste casi 5 kg. Efecto inicial (glucógeno/agua) + inicio de cetosis. <strong>Arranque espectacular</strong>.</div>
+        <div class="bg-amber-50 border-l-4 border-amber-400 rounded-md p-3">8–14 julio: −1.1 kg. Estabilización normal; continúas a la baja.</div>
+        <div class="bg-amber-50 border-l-4 border-amber-400 rounded-md p-3">14–21 julio: −0.5 kg. Semana lenta pero <strong>sin rebote</strong>, mantienes tendencia.</div>
+        <div class="bg-amber-50 border-l-4 border-amber-400 rounded-md p-3">21–28 julio: −1.5 kg. Señal de constancia; gran manejo de comidas.</div>
+        <div class="bg-amber-50 border-l-4 border-amber-400 rounded-md p-3">28 jul–4 ago: −1.5 kg y <strong>IMC &lt; 40</strong>. Dejas obesidad mórbida atrás.</div>
+        <div class="bg-amber-50 border-l-4 border-amber-400 rounded-md p-3">4–11 ago: −1.9 kg. El ayuno intermitente te potenció.</div>
+        <div class="bg-amber-50 border-l-4 border-amber-400 rounded-md p-3">11–18 ago: −0.9 kg. Superaste <strong>123.7 kg</strong>, tu mínimo del año. Consistencia real.</div>
+        <div class="bg-amber-50 border-l-4 border-amber-400 rounded-md p-3">18–25 ago: −0.5 kg. Semana de paciencia: pérdida menor pero acumulativa.</div>
+      </div>
+      <div class="mt-4 p-4 rounded-lg bg-rose-50 border border-rose-200">
+        <h3 class="font-bold text-rose-700 mb-2">Análisis y ajustes sugeridos</h3>
+        <ul class="list-disc list-inside text-sm text-rose-700 space-y-1">
+          <li><strong>Hidratación:</strong> retomar agua natural como base; la coca light puede ser ocasional, pero no debe desplazar al agua.</li>
+          <li><strong>Ayunos:</strong> ya hiciste 17–23 h. Procura 2 veces/sem de 16–18 h con buena hidratación/electrolitos.</li>
+          <li><strong>Procesados keto:</strong> reduce frecuencia de “mamut keto”, panes y postres keto. Prioriza alimentos reales (carne, huevo, verduras, aguacate).</li>
+          <li><strong>Proteína:</strong> asegura ~1.6–2.0 g/kg de peso objetivo. Usa la whey con colágeno para llegar a la cuota.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Metas y Progreso -->
+    <section class="card mt-6">
+      <h3 class="text-xl sm:text-2xl font-extrabold mb-3">Metas y Progreso</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <ul class="space-y-2 text-sm">
+          <li class="flex items-center gap-2"><span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-emerald-100 text-emerald-700">✓</span>Bajar de <strong>130 kg</strong> — conseguido.</li>
+          <li class="flex items-center gap-2"><span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-emerald-100 text-emerald-700">✓</span>Perder más de <strong>10 kg</strong> — conseguido (−12.8 kg).</li>
+          <li class="flex items-center gap-2"><span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-emerald-100 text-emerald-700">✓</span>No subir de peso y mantener tendencia — <em>logro continuo</em>.</li>
+          <li class="flex items-center gap-2"><span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-emerald-100 text-emerald-700">✓</span>Romper <strong>123.700</strong> (mínimo del año) — conseguido.</li>
+        </ul>
+        <ul class="space-y-2 text-sm">
+          <li class="flex items-center gap-2"><span class="dot">•</span>Próxima meta: <strong>&lt; 120 kg</strong>.</li>
+          <li class="flex items-center gap-2"><span class="dot">•</span>Luego: <strong>&lt; 115 kg</strong> y <strong>&lt; 110 kg</strong> (hitos cada 5 kg).</li>
+          <li class="flex items-center gap-2"><span class="dot">•</span>Consolidar 2–3 sesiones/sem de <strong>elíptica</strong> o <strong>videos de bajo impacto</strong> (15–30 min).</li>
+          <li class="flex items-center gap-2"><span class="dot">•</span>Mantener ayuno 2×/sem con buena hidratación/electrolitos.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Beneficios médicos -->
+    <section class="card mt-6">
+      <h2 class="text-xl sm:text-2xl font-extrabold mb-3">Beneficios médicos de tu pérdida de peso</h2>
+      <p class="text-sm sm:text-base text-slate-700">
+        Has bajado casi <strong>13 kg</strong> en dos meses: tu presión arterial está mejor controlada (promedio <strong>117/74</strong>), reduces riesgo de diabetes tipo 2, mejoras tu perfil lipídico y descargas peso en rodillas y columna. <strong>Esta semana tuviste dos días libres</strong>; aun así bajaste <strong>500 g</strong>, señal de que la tendencia es sólida. Después de días libres, conviene dejar pasar más tiempo entre ellos (idealmente <strong>cada 2–4 semanas</strong> como mínimo) para consolidar hábitos y resultados. Entrar en <strong>cetosis</strong> suele tomar <strong>2–4 días</strong> de carbohidratos muy bajos; tras un día libre, volver puede tomar <strong>24–72 h</strong> y, tras dos, hasta <strong>2–4 días</strong>, según carbohidratos ingeridos, actividad y sueño.
+      </p>
+      <ul class="list-disc list-inside text-sm text-slate-600 mt-2">
+        <li>Para volver más rápido: 16–24 h de ayuno, caminar 30–45 min tras 1–2 comidas, 1 cdita de MCT en ventana de comida y 7–8 h de sueño.</li>
+        <li>Hidratación y electrolitos sin azúcar = menos antojos y mejor rendimiento.</li>
+      </ul>
+    </section>
+
+    <!-- Proyección de peso -->
+    <section class="card mt-6">
+      <h2 class="text-xl sm:text-2xl font-extrabold mb-3">Proyección de peso (para motivarte)</h2>
+      <p class="text-sm text-slate-600 mb-2">Con base en <em>122.8 kg</em> al 25 de agosto de 2025:</p>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm border border-slate-200 rounded-lg overflow-hidden">
+          <thead class="bg-slate-50">
+            <tr>
+              <th class="text-left p-2 border-b">Fecha</th>
+              <th class="text-left p-2 border-b">Escenario reciente<br><span class="font-normal text-slate-500">−0.5 kg/sem</span></th>
+              <th class="text-left p-2 border-b">Escenario objetivo sostenible<br><span class="font-normal text-slate-500">−1.0 kg/sem</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="p-2 border-b">1 oct 2025 (~5.3 sem)</td>
+              <td class="p-2 border-b"><strong>≈ 120.2 kg</strong></td>
+              <td class="p-2 border-b"><strong>≈ 117.5 kg</strong></td>
+            </tr>
+            <tr>
+              <td class="p-2 border-b">1 dic 2025 (~13.9 sem)</td>
+              <td class="p-2 border-b"><strong>≈ 115.9 kg</strong></td>
+              <td class="p-2 border-b"><strong>≈ 108.9 kg</strong></td>
+            </tr>
+            <tr>
+              <td class="p-2 border-b">1 feb 2026 (~22.6 sem)</td>
+              <td class="p-2 border-b"><strong>≈ 111.5 kg</strong></td>
+              <td class="p-2 border-b"><strong>≈ 100.2 kg</strong></td>
+            </tr>
+            <tr>
+              <td class="p-2">1 abr 2026 (~31.1 sem)</td>
+              <td class="p-2"><strong>≈ 107.2 kg</strong></td>
+              <td class="p-2"><strong>≈ 91.7 kg</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="text-xs text-slate-500 mt-2">Notas: son estimaciones. Si un mes bajas menos, no pasa nada: la tendencia manda. Ajusta si cambias entrenamiento, calorías o ayunos.</p>
+    </section>
+
+    <!-- Menú interactivo -->
+    <section class="card mt-6">
+      <h2 class="text-xl sm:text-2xl font-extrabold mb-3">Ejemplo de menú diario (elige y combina)</h2>
+      <p class="text-sm text-slate-600 mb-3">Selecciona opciones de desayuno, snack, comida y cena. Los macros del día se actualizarán automáticamente.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm font-semibold">Desayuno</label>
+          <select id="desayuno" class="w-full border rounded p-2 text-sm">
+            <option value='{"kcal":0,"carbs":0,"protein":0,"fat":0}'>Nada (me salto el desayuno)</option>
+            <option value='{"kcal":520,"carbs":4,"protein":32,"fat":42}'>3 huevos + 2 salchichas + queso manchego + 1/2 aguacate</option>
+            <option value='{"kcal":300,"carbs":5,"protein":25,"fat":18}'>Omelette de claras con espinaca y queso panela</option>
+            <option value='{"kcal":430,"carbs":6,"protein":24,"fat":36}'>Huevos a la mexicana + 1/2 aguacate</option>
+            <option value='{"kcal":430,"carbs":10,"protein":20,"fat":34}'>Yogur griego entero (200 g) + nuez (20 g) + chía (1 cda)</option>
+          </select>
+
+          <label class="block text-sm font-semibold mt-3">Snack</label>
+          <select id="snack" class="w-full border rounded p-2 text-sm">
+            <option value='{"kcal":0,"carbs":0,"protein":0,"fat":0}'>Nada (sin snack)</option>
+            <option value='{"kcal":180,"carbs":2,"protein":12,"fat":14}'>Nueces mixtas (30 g)</option>
+            <option value='{"kcal":150,"carbs":2,"protein":20,"fat":7}'>Shake de proteína whey</option>
+            <option value='{"kcal":170,"carbs":3,"protein":12,"fat":13}'>Queso manchego (40 g) + pepino</option>
+            <option value='{"kcal":210,"carbs":2,"protein":6,"fat":19}'>Aceitunas (30 g) + queso feta (30 g)</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold">Comida</label>
+          <select id="comida" class="w-full border rounded p-2 text-sm">
+            <option value='{"kcal":0,"carbs":0,"protein":0,"fat":0}'>Nada (me salto la comida)</option>
+            <option value='{"kcal":600,"carbs":6,"protein":48,"fat":38}'>Consomé de barbacoa con carne de 5 tacos + coca light</option>
+            <option value='{"kcal":450,"carbs":10,"protein":40,"fat":25}'>Pechuga de pollo asada + ensalada con aguacate</option>
+            <option value='{"kcal":650,"carbs":6,"protein":35,"fat":52}'>Ensalada de salmón + aguacate + aceite de oliva</option>
+            <option value='{"kcal":520,"carbs":7,"protein":40,"fat":36}'>Tacos de lechuga con carne molida y queso</option>
+          </select>
+
+          <label class="block text-sm font-semibold mt-3">Cena</label>
+          <select id="cena" class="w-full border rounded p-2 text-sm">
+            <option value='{"kcal":0,"carbs":0,"protein":0,"fat":0}'>Nada (me salto la cena)</option>
+            <option value='{"kcal":550,"carbs":8,"protein":35,"fat":42}'>Sándwich keto: pan keto + jamón + queso crema + manchego + aguacate + chiles + mayonesa</option>
+            <option value='{"kcal":400,"carbs":7,"protein":30,"fat":28}'>Ensalada de atún con mayonesa y pepino</option>
+            <option value='{"kcal":450,"carbs":8,"protein":38,"fat":28}'>Calabacitas salteadas con pollo deshebrado y queso</option>
+            <option value='{"kcal":420,"carbs":10,"protein":16,"fat":34}'>Crema de brócoli con crema y tocino</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="mt-4 p-3 bg-emerald-50 border border-emerald-200 rounded">
+        <h3 class="font-bold mb-1">Macros del día seleccionados</h3>
+        <p id="macros" class="text-sm">Selecciona opciones para ver los totales.</p>
+      </div>
+    </section>
+
+    <!-- Suplementos (detallado, casi al final) -->
+    <section class="card mt-6">
+      <h2 class="text-xl sm:text-2xl font-extrabold mb-3">Suplementos diarios: dosis, para qué sirven y cómo te ayudan</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-slate-700">
+        <div class="space-y-2">
+          <div class="p-3 rounded-lg border border-slate-200">
+            <p><strong>Mañana — Losartán</strong> · 1 tableta</p>
+            <p class="text-slate-600">Antihipertensivo. Mantiene tu PA en 117/74 aprox. Mientras sigas bajando, tu médico podrá valorar ajustar dosis.</p>
+          </div>
+          <div class="p-3 rounded-lg border border-slate-200">
+            <p><strong>Mañana — Dimefort (Metformina 750 mg)</strong> · 1 tableta</p>
+            <p class="text-slate-600">Mejora sensibilidad a la insulina; ayuda a controlar antojos y picos de glucosa. Encaja bien con keto y ayuno.</p>
+          </div>
+          <div class="p-3 rounded-lg border border-slate-200">
+            <p><strong>Mañana — Colágeno</strong> · 2 cápsulas</p>
+            <p class="text-slate-600">Soporte de articulaciones y piel durante la pérdida de peso; útil si caminas o haces elíptica.</p>
+          </div>
+          <div class="p-3 rounded-lg border border-slate-200">
+            <p><strong>Mañana — Probiótico</strong> · 1 cápsula</p>
+            <p class="text-slate-600">Mejora digestión y absorción; ayuda a tolerar mejor ayunos prolongados.</p>
+          </div>
+          <div class="p-3 rounded-lg border border-slate-200">
+            <p><strong>Mañana — Vitamina D</strong> · 1 cápsula</p>
+            <p class="text-slate-600">Inmunidad, hueso y ánimo. En déficit es más difícil rendir y dormir bien.</p>
+          </div>
+          <div class="p-3 rounded-lg border border-slate-200">
+            <p><strong>Mañana — Resveratrol</strong> · 1 cápsula</p>
+            <p class="text-slate-600">Antioxidante; puede apoyar salud cardiovascular y reducir inflamación de bajo grado.</p>
+          </div>
+        </div>
+        <div class="space-y-2">
+          <div class="p-3 rounded-lg border border-slate-200">
+            <p><strong>Mañana — Multivitamínico (Centrum Performance)</strong> · 1 tableta</p>
+            <p class="text-slate-600">Cubre micronutrientes mientras comes menos calorías; apoya energía diaria.</p>
+          </div>
+          <div class="p-3 rounded-lg border border-slate-200">
+            <p><strong>Mañana — Trimagnesio</strong> · 2 cápsulas</p>
+            <p class="text-slate-600">Sistema nervioso y muscular; ayuda a evitar calambres en keto.</p>
+          </div>
+          <div class="p-3 rounded-lg border border-slate-200">
+            <p><strong>Noche — Magnesio con fibra</strong> · 1 cápsula</p>
+            <p class="text-slate-600">Mejora tránsito intestinal y calidad de sueño.</p>
+          </div>
+          <div class="p-3 rounded-lg border border-slate-200">
+            <p><strong>Mañana — Complejo B con krill</strong> · 1 cápsula</p>
+            <p class="text-slate-600">Metabolismo energético y sistema nervioso; el omega del krill apoya corazón y cerebro.</p>
+          </div>
+          <div class="p-3 rounded-lg border border-slate-200">
+            <p><strong>Cuando llegue — Aceite MCT</strong> · 1 cdita en café</p>
+            <p class="text-slate-600">Energía rápida y cetonas. <em>Si ayuno estricto</em>, úsalo dentro de la ventana de comida; si buscas solo cetosis, puedes usarlo en el café matutino.</p>
+          </div>
+          <div class="p-3 rounded-lg border border-slate-200">
+            <p><strong>Cuando llegue — Proteína whey keto con colágeno</strong> · 1 porción</p>
+            <p class="text-slate-600">Ideal al medio día o post-ejercicio para llegar a tu cuota proteica y proteger músculo/piel.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cierre narrativo + frases motivacionales -->
+    <section class="mt-6">
+      <div class="card bg-gradient-to-r from-emerald-50 to-emerald-100 border border-emerald-200">
+        <p class="text-base sm:text-lg md:text-xl font-bold">Tu historia hasta hoy</p>
+        <p class="mt-1 text-sm sm:text-base">
+          Empezaste el 1 de julio decidido a cambiar. En ocho semanas bajaste <strong>12.8 kg</strong>, normalizaste tu presión, mejoraste tu energía y aprendiste a usar el ayuno y la keto a tu favor. Esta semana fueron <strong>500 g</strong> menos: prueba de disciplina real. Sigues construyendo una versión de ti más ligera, más fuerte y más enfocada.
+        </p>
+        <div class="mt-3 grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
+          <div class="p-3 rounded-lg border border-emerald-200 bg-white/60">• “La constancia le gana al impulso.”</div>
+          <div class="p-3 rounded-lg border border-emerald-200 bg-white/60">• “No compites con nadie, solo con tu yo de ayer.”</div>
+          <div class="p-3 rounded-lg border border-emerald-200 bg-white/60">• “Un mal día no cancela un buen plan.”</div>
+          <div class="p-3 rounded-lg border border-emerald-200 bg-white/60">• “Cuando cuidas tu cuerpo, tu cuerpo te cuida.”</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="bg-slate-900 text-white text-center py-6 rounded-t-[2rem]">
+    <p class="text-sm opacity-80">Hecho para Goplemmings — Agosto 2025</p>
+  </footer>
+
+  <script>
+    // Gráficas
+    const labels = ['1 Jul','8 Jul','14 Jul','21 Jul','28 Jul','4 Ago','11 Ago','18 Ago','25 Ago'];
+    const pesos  = [135.6,130.7,129.6,129.1,127.6,126.1,124.2,123.3,122.8];
+
+    const ctxW = document.getElementById('weightChart').getContext('2d');
+    new Chart(ctxW, {
+      type: 'line',
+      data: { labels, datasets: [{ label: 'Peso (kg)', data: pesos, borderColor: '#059669', backgroundColor: 'rgba(5,150,105,.12)', pointBackgroundColor: '#059669', borderWidth: 3, pointRadius: 4, pointHoverRadius: 6, tension: .35, fill: true }]},
+      options: { responsive: true, maintainAspectRatio: false, interaction:{mode:'nearest',intersect:false}, scales:{ y:{grid:{color:'rgba(2,6,23,.06)'}}, x:{grid:{display:false}} }, plugins:{legend:{display:false}} }
+    });
+
+    const ctxI = document.getElementById('imcChart').getContext('2d');
+    new Chart(ctxI, {
+      type: 'bar',
+      data: { labels: ['IMC inicio 42.8','IMC actual 38.7'], datasets: [{ data: [42.8,38.7], backgroundColor: ['#ef4444','#22c55e'], borderColor: ['#b91c1c','#15803d'], borderWidth: 1, borderRadius: 8 }]},
+      options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, scales:{ x:{grid:{color:'rgba(2,6,23,.06)'}}, y:{grid:{display:false}} }, plugins:{legend:{display:false}} }
+    });
+
+    // Menú interactivo - calcula macros sumando los valores de los selects
+    function parseSel(id){
+      try { return JSON.parse(document.getElementById(id).value); }
+      catch(e){ return {kcal:0,carbs:0,protein:0,fat:0}; }
+    }
+    function actualizarMacros(){
+      const d = parseSel('desayuno');
+      const s = parseSel('snack');
+      const c = parseSel('comida');
+      const e = parseSel('cena');
+      const total = {
+        kcal: d.kcal+s.kcal+c.kcal+e.kcal,
+        carbs: d.carbs+s.carbs+c.carbs+e.carbs,
+        protein: d.protein+s.protein+c.protein+e.protein,
+        fat: d.fat+s.fat+c.fat+e.fat
+      };
+      document.getElementById('macros').innerHTML =
+        `<strong>Calorías:</strong> ${total.kcal.toFixed(0)} kcal · 
+         <strong>Carbs netos:</strong> ${total.carbs.toFixed(0)} g · 
+         <strong>Proteína:</strong> ${total.protein.toFixed(0)} g · 
+         <strong>Grasa:</strong> ${total.fat.toFixed(0)} g`;
+    }
+    ['desayuno','snack','comida','cena'].forEach(id => {
+      document.getElementById(id).addEventListener('change', actualizarMacros);
+    });
+    // Inicial
+    actualizarMacros();
+  </script>
+</body>
+</html>
