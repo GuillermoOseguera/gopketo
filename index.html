@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Goplemmings dieta Keto — Actualizado 7 Sep 2025 (v2)</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    body{font-family:'Inter',sans-serif;background:#f8fafc;color:#1e293b} /* Slightly lighter background */
+    .card{background:#fff;border-radius:1.5rem;box-shadow:0 12px 28px rgba(2,6,23,.08);padding:1.5rem} /* Softer, larger shadow */
+    .header-bg{background:linear-gradient(135deg,#10b981,#059669); /* Richer gradient */
+               border-bottom-left-radius: 3rem; border-bottom-right-radius: 3rem;} /* More pronounced curve */
+    .stat{background:rgba(255,255,255,.25);backdrop-filter:blur(10px);border-radius:1rem;color:#fff;
+          box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+          padding: 1rem;}
+    .chart-wrap{position:relative;height:18rem}
+    @media (min-width:640px){.chart-wrap{height:20rem}}
+    @media (min-width:1024px){.chart-wrap{height:22rem}}
+    .badge{position:absolute;right:.75rem;top:.75rem;background:#064e3b;color:#ecfdf5;border:1px solid #065f46;border-radius:9999px;padding:.4rem .75rem;font-weight:700;font-size:.8rem;z-index: 10;}
+
+    /* Custom styles for motivation phrase */
+    .motivation-phrase {
+      background: linear-gradient(45deg, #059669, #10b981, #34d399); /* Greenish gradient */
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-size: clamp(1.8rem, 5vw, 3.5rem); /* Responsive font size */
+      line-height: 1.2;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+    }
+    .comment-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      background: #eff6ff; /* Light blue for comments */
+      border-left: 4px solid #3b82f6; /* Blue border */
+      border-radius: 0.5rem;
+      padding: 0.8rem 1rem;
+      font-size: 0.95rem;
+      color: #1e40af;
+    }
+    .comment-icon {
+      flex-shrink: 0;
+      color: #3b82f6;
+      font-size: 1.25rem;
+      line-height: 1;
+    }
+    .progress-bar-container {
+        width: 100%;
+        background-color: #e2e8f0;
+        border-radius: 9999px;
+        height: 1.5rem;
+        overflow: hidden;
+        margin-top: 1rem;
+        position: relative;
+    }
+    .progress-bar {
+        height: 100%;
+        background-color: #059669;
+        border-radius: 9999px;
+        transition: width 0.5s ease-in-out;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding-right: 0.5rem;
+    }
+    .progress-text {
+        color: white;
+        font-weight: bold;
+        font-size: 0.8rem;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    }
+    .progress-target-line {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 2px; /* Thin line */
+        background-color: #dc2626; /* Red line for target */
+        z-index: 1;
+    }
+    /* Simple custom scrollbar hide for demonstration */
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+    }
+    .scrollbar-hide {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+    }
+  </style>
+</head>
+<body class="text-slate-800">
+<!-- Header -->
+<header class="header-bg text-white px-4 sm:px-8 md:px-16 py-8 md:py-12 shadow-xl">
+<div class="flex flex-col sm:flex-row items-center gap-6 md:gap-8 max-w-6xl mx-auto">
+<img alt="Logo Goplemmings" class="w-28 sm:w-36 md:w-48 rounded-2xl shadow-lg object-contain" src="https://i.postimg.cc/d0dTJTR2/logo.png"/>
+<div class="flex-1 text-center sm:text-left">
+<h1 class="text-3xl sm:text-5xl md:text-6xl font-extrabold leading-tight tracking-tight">Goplemmings Keto</h1>
+<p class="text-md sm:text-xl md:text-2xl opacity-95 mt-2 font-light">Del 1 de julio al 7 de septiembre de 2025</p>
+<p class="text-sm sm:text-base md:text-lg opacity-80 italic">Evolución con comentarios y tips actualizados (v2)</p>
+</div>
+</div>
+<!-- Stats -->
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 mt-8 max-w-6xl mx-auto">
+<div class="stat p-4 text-center">
+<p class="text-3xl sm:text-4xl font-extrabold">−16.0 kg</p>
+<p class="text-xs uppercase tracking-wide opacity-90 mt-1">Peso perdido</p>
+</div>
+<div class="stat p-4 text-center">
+<p class="text-3xl sm:text-4xl font-extrabold">10 semanas</p>
+<p class="text-xs uppercase tracking-wide opacity-90 mt-1">Constancia</p>
+</div>
+<div class="stat p-4 text-center">
+<p class="text-3xl sm:text-4xl font-extrabold" id="imcPoints">-5.0</p>
+<p class="text-xs uppercase tracking-wide opacity-90 mt-1">Puntos de IMC</p>
+</div>
+<div class="stat p-4 text-center">
+<p class="text-3xl sm:text-4xl font-extrabold" id="imcStatus">Grado II</p>
+<p class="text-xs uppercase tracking-wide opacity-90 mt-1">Estado actual IMC</p>
+</div>
+</div>
+</header>
+<main class="container mx-auto px-4 pb-16 -mt-10 sm:-mt-12 md:-mt-16 relative z-10">
+<!-- Fechas clave -->
+<section class="card mt-8">
+<h2 class="text-xl sm:text-2xl font-bold mb-4">Fechas clave (peso — kg)</h2>
+<div class="flex overflow-x-auto gap-3 pb-2 scrollbar-hide">
+<span class="shrink-0 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-full px-4 py-1.5 text-sm font-medium">01 Jul · <strong>135.6</strong></span>
+<span class="shrink-0 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-full px-4 py-1.5 text-sm font-medium">08 Jul · <strong>130.7</strong></span>
+<span class="shrink-0 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-full px-4 py-1.5 text-sm font-medium">14 Jul · <strong>129.6</strong></span>
+<span class="shrink-0 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-full px-4 py-1.5 text-sm font-medium">21 Jul · <strong>129.1</strong></span>
+<span class="shrink-0 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-full px-4 py-1.5 text-sm font-medium">28 Jul · <strong>127.6</strong></span>
+<span class="shrink-0 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-full px-4 py-1.5 text-sm font-medium">04 Ago · <strong>126.1</strong></span>
+<span class="shrink-0 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-full px-4 py-1.5 text-sm font-medium">11 Ago · <strong>124.2</strong></span>
+<span class="shrink-0 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-full px-4 py-1.5 text-sm font-medium">18 Ago · <strong>123.3</strong></span>
+<span class="shrink-0 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-full px-4 py-1.5 text-sm font-medium">25 Ago · <strong>122.8</strong></span>
+<span class="shrink-0 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-full px-4 py-1.5 text-sm font-medium">01 Sep · <strong>122.8</strong></span>
+<span class="shrink-0 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-full px-4 py-1.5 text-sm font-medium">07 Sep · <strong>119.6</strong></span>
+</div>
+</section>
+<!-- Gráficas -->
+<section class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
+<!-- Peso -->
+<div class="card lg:col-span-2">
+<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-3 gap-2">
+<h3 class="text-xl sm:text-2xl font-bold">Evolución de tu Peso (kg)</h3>
+<span class="text-sm text-gray-500">Jul 1 – Sep 7, 2025</span>
+</div>
+<div class="chart-wrap">
+<span class="badge">Total perdido: −16.0 kg</span>
+<canvas id="weightChart"></canvas>
+</div>
+<p class="mt-4 text-sm text-gray-600"><strong>Comentario:</strong> Del <strong>1 al 7 de septiembre</strong> bajaste <strong>3.2 kg</strong> (la semana previa fue <strong>0.0 kg</strong>). Ese repunte confirma que la constancia paga.</p>
+</div>
+<!-- Pérdida Semanal y IMC -->
+<div class="grid grid-cols-1 gap-6">
+<div class="card">
+<h3 class="text-lg sm:text-xl font-bold mb-2">Pérdida Semanal (kg)</h3>
+<div class="chart-wrap !h-40">
+<canvas id="weeklyLossChart"></canvas>
+</div>
+<p class="mt-2 text-sm text-gray-600">Un pico de <strong>-3.2 kg</strong> en la última semana, tras un estancamiento. ¡Gran resiliencia!</p>
+</div>
+<div class="card">
+<h3 class="text-lg sm:text-xl font-bold mb-2">IMC: inicio vs. actual</h3>
+<div class="relative h-48"><canvas id="imcChart"></canvas></div>
+<p class="mt-2 text-sm text-gray-600" id="imcComment">De <strong>42.8</strong> (Obesidad grado III) a <strong>37.7</strong> (grado II). La meta de <strong>&lt;35</strong> (grado I) se acerca.</p>
+</div>
+</div>
+</section><section class="mt-6"><div class="card text-center bg-white border border-emerald-100 p-6"><img alt="Keto Avocado Mascot" class="mx-auto w-64 mt-4 rounded-xl shadow-lg" src="ketoaguacate.png"/></div></section>
+<!-- Frase motivacional NUEVA -->
+<section class="mt-6">
+<div class="card text-center bg-white border border-emerald-100 p-6">
+<p class="motivation-phrase">
+          “Hoy no compite mi ego, compite mi constancia.”
+        </p>
+<p class="text-base text-slate-500 mt-3 italic">Sigue sumando días: cada decisión te acerca a tu meta.</p>
+</div>
+</section>
+<!-- Barra de Progreso a la Meta -->
+<section class="card mt-6">
+<h3 class="text-xl sm:text-2xl font-extrabold mb-3">Progreso hacia tu Próxima Meta: &lt; 115 kg</h3>
+<div class="progress-bar-container">
+<div class="progress-bar" id="progressBar" style="width: 33%; background: linear-gradient(to right, #34d399, #059669);">
+<span class="progress-text" id="progressText"></span>
+<span class="progress-text">🐇 → 🥕</span></div>
+<!-- Target line for 115kg -->
+<div class="progress-target-line" id="targetLine" style="left: 0%;"></div>
+</div>
+<p class="text-sm text-slate-600 mt-3">Excelente, sigue así, vas muy bien.</p>
+</section>
+<!-- Comentarios por semana + análisis -->
+<section class="card mt-6">
+<h2 class="text-xl sm:text-2xl font-bold mb-4 text-center">Comentarios Semana a Semana</h2>
+<div class="space-y-4">
+<div class="comment-item"><span class="comment-icon">🔥</span>1–8 julio: Bajaste casi 5 kg. Efecto inicial (glucógeno/agua) + inicio de cetosis. <strong>Arranque espectacular</strong>.</div>
+<div class="comment-item"><span class="comment-icon">⬇️</span>8–14 julio: −1.1 kg. Estabilización normal; continúas a la baja.</div>
+<div class="comment-item"><span class="comment-icon">🐢</span>14–21 julio: −0.5 kg. Semana lenta pero <strong>sin rebote</strong>, mantienes tendencia.</div>
+<div class="comment-item"><span class="comment-icon">💪</span>21–28 julio: −1.5 kg. Señal de constancia; gran manejo de comidas.</div>
+<div class="comment-item"><span class="comment-icon">🎉</span>28 jul–4 ago: −1.5 kg y <strong>IMC &lt; 40</strong>. Dejas obesidad mórbida atrás.</div>
+<div class="comment-item"><span class="comment-icon">🚀</span>4–11 ago: −1.9 kg. El ayuno intermitente te potenció.</div>
+<div class="comment-item"><span class="comment-icon">🏆</span>11–18 ago: −0.9 kg. Superaste <strong>123.7 kg</strong>, tu mínimo del año. Consistencia real.</div>
+<div class="comment-item"><span class="comment-icon">🧘‍♀️</span>18–25 ago: −0.5 kg. Semana de paciencia: pérdida menor pero acumulativa.</div>
+<div class="comment-item"><span class="comment-icon">✅</span>25 ago–1 sep: <strong>0.0 kg</strong>. Aunque no bajaste en la báscula, seguramente lo notaste en la talla. Lo más importante es que <strong>no desististe</strong>; antes te habría desmotivado, hoy te mantuviste firme.</div>
+<div class="comment-item"><span class="comment-icon">🌟</span>1–7 sep: <strong>−3.2 kg</strong>. Recompensa a tu constancia: rompiste la barrera de los <strong>120 kg</strong> mucho antes de lo esperado. <strong>¡Felicidades!</strong></div>
+</div>
+<div class="mt-6 p-4 rounded-xl bg-rose-50 border border-rose-200">
+<h3 class="font-bold text-rose-700 mb-2 text-lg">Análisis y ajustes sugeridos</h3>
+<ul class="list-disc list-inside text-sm text-rose-700 space-y-1.5">
+<li><strong>Hidratación:</strong> prioriza agua natural; refrescos light solo como apoyo, no como base.</li>
+<li><strong>Ayunos:</strong> mantén 2 veces/sem de 16–18 h con buena hidratación/electrolitos.</li>
+<li><strong>Procesados “keto”:</strong> limita panes/postres “keto” a momentos puntuales; enfócate en comida real.</li>
+<li><strong>Proteína:</strong> apunta a ~1.6–2.0 g/kg de peso objetivo; utiliza whey con colágeno si hace falta.</li>
+</ul>
+</div>
+</section>
+<!-- Metas y Progreso -->
+<section class="card mt-6">
+<h3 class="text-xl sm:text-2xl font-extrabold mb-3">Metas y Progreso</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+<ul class="space-y-2">
+<li class="flex items-center gap-2"><span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-emerald-100 text-emerald-700">✓</span>Bajar de <strong>130 kg</strong> — conseguido.</li>
+<li class="flex items-center gap-2"><span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-emerald-100 text-emerald-700">✓</span>Perder más de <strong>10 kg</strong> — conseguido (−16.0 kg).</li>
+<li class="flex items-center gap-2"><span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-emerald-100 text-emerald-700">✓</span>No subir de peso y mantener tendencia — <em>logro continuo</em>.</li>
+<li class="flex items-center gap-2"><span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-emerald-100 text-emerald-700">✓</span>Romper <strong>123.700</strong> (mínimo del año) — conseguido.</li>
+<li class="flex items-center gap-2"><span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-emerald-100 text-emerald-700">✓</span>Romper la barrera de los <strong>120 kg</strong> — conseguido.</li>
+</ul>
+<ul class="space-y-2">
+<li class="flex items-center gap-2"><span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-slate-200 text-slate-800 font-bold">•</span>Próxima meta: <strong>&lt; 115 kg</strong>.</li>
+<li class="flex items-center gap-2"><span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-slate-200 text-slate-800 font-bold">•</span>Luego: <strong>&lt; 110 kg</strong> y <strong>&lt; 105 kg</strong> (hitos cada 5 kg).</li>
+<li class="flex items-center gap-2"><span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-slate-200 text-slate-800 font-bold">•</span>Consolidar 2–3 sesiones/sem de <strong>elíptica</strong> o <strong>videos de bajo impacto</strong> (15–30 min).</li>
+<li class="flex items-center gap-2"><span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-slate-200 text-slate-800 font-bold">•</span>Mantener ayuno 2×/sem con buena hidratación/electrolitos.</li>
+</ul>
+</div>
+</section>
+<!-- Beneficios médicos (RESUMEN actualizado) -->
+<section class="card mt-6">
+<h2 class="text-xl sm:text-2xl font-extrabold mb-3">Beneficios médicos de tu pérdida de peso</h2>
+<ul class="list-disc list-inside text-sm text-slate-700 space-y-1.5">
+<li><strong>Corazón:</strong> cada punto de IMC menos reduce la carga cardiovascular y ayuda a mantener una presión más estable.</li>
+<li><strong>Articulaciones:</strong> por cada kilo perdido, tus rodillas reciben hasta 4 kg menos de impacto al caminar.</li>
+<li><strong>Metabolismo:</strong> menos resistencia a la insulina, mejor control de glucosa y menor riesgo de DM2.</li>
+<li><strong>Sueño y energía:</strong> al bajar grasa visceral, disminuye el ronquido/apnea y sube tu energía diaria.</li>
+<li><strong>Tallas:</strong> aun cuando la báscula se estanca, la pérdida de grasa se nota en ropa y medidas.</li>
+</ul>
+<p class="text-sm sm:text-base text-slate-700 mt-4">
+  En tu estatura (<strong>1.78 m</strong>), <strong>1 kg ≈ 0.3 puntos de IMC</strong>. 
+  Si pierdes <strong>0.5 kg/sem</strong>, bajas ~<strong>0.15</strong> puntos de IMC por semana; con <strong>1.0 kg/sem</strong>, ~<strong>0.3</strong> puntos/sem.
+  <br/>En promedio, <strong>1 punto de IMC</strong> se reduce cada <strong>3–7 semanas</strong> según el ritmo. 
+  Tú llevas <strong>-16.0 kg</strong> en 10 semanas (≈ <strong id="imcPointsText">-5.0 puntos</strong> de IMC): avance excepcional.
+</p>
+</section>
+<!-- Proyección de peso -->
+<section class="card mt-6">
+<h2 class="text-xl sm:text-2xl font-extrabold mb-3">Proyección de peso (para motivarte)</h2>
+<p class="text-sm text-slate-600 mb-4">Con base en <em id="currentWeightProj">119.6 kg</em> al 7 de septiembre de 2025:</p>
+<div class="overflow-x-auto">
+<table class="w-full text-sm border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+<thead class="bg-slate-50">
+<tr>
+<th class="text-left p-3 border-b border-slate-200">Fecha</th>
+<th class="text-left p-3 border-b border-slate-200">Escenario reciente<br/><span class="font-normal text-slate-500">−0.5 kg/sem</span></th>
+<th class="text-left p-3 border-b border-slate-200">Escenario objetivo sostenible<br/><span class="font-normal text-slate-500">−1.0 kg/sem</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="p-3 border-b border-slate-100">1 oct 2025</td>
+<td class="p-3 border-b border-slate-100"><strong>≈ 117.9 kg</strong></td>
+<td class="p-3 border-b border-slate-100"><strong>≈ 116.2 kg</strong></td>
+</tr>
+<tr>
+<td class="p-3 border-b border-slate-100">1 dic 2025</td>
+<td class="p-3 border-b border-slate-100"><strong>≈ 113.5 kg</strong></td>
+<td class="p-3 border-b border-slate-100"><strong>≈ 107.5 kg</strong></td>
+</tr>
+<tr>
+<td class="p-3 border-b border-slate-100">1 feb 2026</td>
+<td class="p-3 border-b border-slate-100"><strong>≈ 109.1 kg</strong></td>
+<td class="p-3 border-b border-slate-100"><strong>≈ 98.6 kg</strong></td>
+</tr>
+<tr>
+<td class="p-3 border-b border-slate-100">1 abr 2026</td>
+<td class="p-3 border-b border-slate-100"><strong>≈ 104.9 kg</strong></td>
+<td class="p-3 border-b border-slate-100"><strong>≈ 90.2 kg</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p class="text-xs text-slate-500 mt-3">Notas: son estimaciones. Si un mes bajas menos, no pasa nada: la tendencia manda. Ajusta si cambias entrenamiento, calorías o ayunos.</p>
+</section>
+<!-- Menú interactivo -->
+<section class="card mt-6">
+<h2 class="text-xl sm:text-2xl font-extrabold mb-3">Ejemplo de menú diario (elige y combina)</h2>
+<p class="text-sm text-slate-600 mb-4">Selecciona opciones de desayuno, snack, comida y cena. Los macros del día se actualizarán automáticamente.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div>
+<label class="block text-sm font-semibold mb-1">Desayuno</label>
+<select class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-emerald-500 focus:border-emerald-500" id="desayuno">
+<option value='{"kcal":0,"carbs":0,"protein":0,"fat":0}'>Nada (me salto el desayuno)</option>
+<option value='{"kcal":520,"carbs":4,"protein":32,"fat":42}'>3 huevos + 2 salchichas + queso manchego + 1/2 aguacate</option>
+<option value='{"kcal":300,"carbs":5,"protein":25,"fat":18}'>Omelette de claras con espinaca y queso panela</option>
+<option value='{"kcal":430,"carbs":6,"protein":24,"fat":36}'>Huevos a la mexicana + 1/2 aguacate</option>
+<option value='{"kcal":430,"carbs":10,"protein":20,"fat":34}'>Yogur griego entero (200 g) + nuez (20 g) + chía (1 cda)</option>
+</select>
+<label class="block text-sm font-semibold mt-4 mb-1">Snack</label>
+<select class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-emerald-500 focus:border-emerald-500" id="snack">
+<option value='{"kcal":0,"carbs":0,"protein":0,"fat":0}'>Nada (sin snack)</option>
+<option value='{"kcal":180,"carbs":2,"protein":12,"fat":14}'>Nueces mixtas (30 g)</option>
+<option value='{"kcal":150,"carbs":2,"protein":20,"fat":7}'>Shake de proteína whey</option>
+<option value='{"kcal":170,"carbs":3,"protein":12,"fat":13}'>Queso manchego (40 g) + pepino</option>
+<option value='{"kcal":210,"carbs":2,"protein":6,"fat":19}'>Aceitunas (30 g) + queso feta (30 g)</option>
+</select>
+</div>
+<div>
+<label class="block text-sm font-semibold mb-1">Comida</label>
+<select class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-emerald-500 focus:border-emerald-500" id="comida">
+<option value='{"kcal":0,"carbs":0,"protein":0,"fat":0}'>Nada (me salto la comida)</option>
+<option value='{"kcal":600,"carbs":6,"protein":48,"fat":38}'>Consomé de barbacoa con carne de 5 tacos + coca light</option>
+<option value='{"kcal":450,"carbs":10,"protein":40,"fat":25}'>Pechuga de pollo asada + ensalada con aguacate</option>
+<option value='{"kcal":650,"carbs":6,"protein":35,"fat":52}'>Ensalada de salmón + aguacate + aceite de oliva</option>
+<option value='{"kcal":520,"carbs":7,"protein":40,"fat":36}'>Tacos de lechuga con carne molida y queso</option>
+</select>
+<label class="block text-sm font-semibold mt-4 mb-1">Cena</label>
+<select class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-emerald-500 focus:border-emerald-500" id="cena">
+<option value='{"kcal":0,"carbs":0,"protein":0,"fat":0}'>Nada (me salto la cena)</option>
+<option value='{"kcal":550,"carbs":8,"protein":35,"fat":42}'>Sándwich keto: pan keto + jamón + queso crema + manchego + aguacate + chiles + mayonesa</option>
+<option value='{"kcal":400,"carbs":7,"protein":30,"fat":28}'>Ensalada de atún con mayonesa y pepino</option>
+<option value='{"kcal":450,"carbs":8,"protein":38,"fat":28}'>Calabacitas salteadas con pollo deshebrado y queso</option>
+<option value='{"kcal":420,"carbs":10,"protein":16,"fat":34}'>Crema de brócoli con crema y tocino</option>
+</select>
+</div>
+</div>
+<div class="mt-6 p-4 bg-emerald-50 border border-emerald-200 rounded-lg shadow-sm">
+<h3 class="font-bold mb-2 text-lg text-emerald-800">Macros del día seleccionados</h3>
+<p class="text-sm text-emerald-700" id="macros">Selecciona opciones para ver los totales.</p>
+</div>
+</section>
+<!-- Cierre narrativo -->
+<section class="mt-6">
+<div class="card bg-gradient-to-r from-emerald-50 to-emerald-100 border border-emerald-200 p-6">
+<p class="text-lg sm:text-xl md:text-2xl font-bold text-emerald-800">Tu historia hasta hoy</p>
+<p class="mt-3 text-sm sm:text-base text-slate-700 leading-relaxed">
+          En <strong>10 semanas</strong> bajaste <strong>16.0 kg</strong> (IMC <span id="bmiStartNarrative"></span> → <span id="bmiCurrentNarrative"></span>). La semana del <strong>1 al 7 de septiembre</strong> fueron <strong>3.2 kg</strong> menos y alcanzaste la meta de estar por debajo de <strong>120 kg</strong> <em>antes de lo esperado</em>. Cada punto de IMC que bajas es menos presión para tu corazón y tus articulaciones. Vas por excelente camino.
+        </p>
+<div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+<div class="p-3 rounded-lg border border-emerald-200 bg-white/70 shadow-sm">• “La constancia le gana al impulso.”</div>
+<div class="p-3 rounded-lg border border-emerald-200 bg-white/70 shadow-sm">• “No compites con nadie, solo con tu yo de ayer.”</div>
+<div class="p-3 rounded-lg border border-emerald-200 bg-white/70 shadow-sm">• “Un mal día no cancela un buen plan.”</div>
+<div class="p-3 rounded-lg border border-emerald-200 bg-white/70 shadow-sm">• “Cuando cuidas tu cuerpo, tu cuerpo te cuida.”</div>
+</div>
+</div>
+</section>
+</main>
+<footer class="bg-slate-900 text-white text-center py-8 rounded-t-[2.5rem] mt-12">
+<p class="text-sm opacity-80 mb-2">Hecho para Goplemmings — Septiembre 2025</p>
+<div class="flex flex-wrap justify-center gap-x-4 gap-y-1 text-xs opacity-70">
+<span>"Tu salud es tu mayor riqueza."</span>
+<span>"Pequeños pasos, grandes resultados."</span>
+<span>"Invierte en ti, invierte en tu bienestar."</span>
+</div>
+</footer>
+<script>
+    const currentHeight = 1.78; // meters
+
+    // Datos para gráficas
+    const labels = ['1 Jul','8 Jul','14 Jul','21 Jul','28 Jul','4 Ago','11 Ago','18 Ago','25 Ago','1 Sep','7 Sep'];
+    const pesos  = [135.6,130.7,129.6,129.1,127.6,126.1,124.2,123.3,122.8,122.8,119.6];
+
+    // Calculate weekly weight loss
+    const weeklyLoss = [];
+    for (let i = 1; i < pesos.length; i++) {
+        weeklyLoss.push(pesos[i] - pesos[i-1]);
+    }
+    const weeklyLossLabels = labels.slice(1);
+
+    // Calculate IMC
+    function calculateBMI(weightKg, heightM) {
+        return weightKg / (heightM * heightM);
+    }
+
+    const bmiStart = calculateBMI(pesos[0], currentHeight);
+    const bmiCurrent = calculateBMI(pesos[pesos.length - 1], currentHeight);
+
+    function getBMIStatus(bmi) {
+        if (bmi < 18.5) return "Bajo peso";
+        if (bmi < 25) return "Peso normal";
+        if (bmi < 30) return "Sobrepeso";
+        if (bmi < 35) return "Obesidad grado I";
+        if (bmi < 40) return "Obesidad grado II";
+        return "Obesidad grado III";
+    }
+
+    document.getElementById('imcPoints').textContent = (bmiCurrent - bmiStart).toFixed(1);
+    document.getElementById('imcStatus').textContent = getBMIStatus(bmiCurrent);
+    document.getElementById('imcComment').innerHTML = `De <strong>${bmiStart.toFixed(1)}</strong> (${getBMIStatus(bmiStart)}) a <strong>${bmiCurrent.toFixed(1)}</strong> (${getBMIStatus(bmiCurrent)}). La meta de <strong>&lt;35</strong> (grado I) se acerca.`;
+    document.getElementById('imcPointsText').textContent = `${(bmiCurrent - bmiStart).toFixed(1)} puntos`;
+    document.getElementById('bmiStartNarrative').textContent = `${bmiStart.toFixed(1)} (${getBMIStatus(bmiStart)})`;
+    document.getElementById('bmiCurrentNarrative').textContent = `${bmiCurrent.toFixed(1)} (${getBMIStatus(bmiCurrent)})`;
+    document.getElementById('currentWeightProj').textContent = `${pesos[pesos.length - 1]} kg`;
+
+
+    // Chart: Weight Evolution
+    const ctxW = document.getElementById('weightChart').getContext('2d');
+    new Chart(ctxW, {
+      type: 'line',
+      data: { labels, datasets: [{ label: 'Peso (kg)', data: pesos, borderColor: '#059669', backgroundColor: 'rgba(5,150,105,.12)', pointBackgroundColor: '#059669', borderWidth: 3, pointRadius: 4, pointHoverRadius: 6, tension: .35, fill: true }] },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: {mode:'nearest',intersect:false},
+        scales:{
+          y:{
+            grid:{color:'rgba(2,6,23,.06)'},
+            ticks: {
+                callback: function(value, index, values) {
+                    return value + ' kg';
+                }
+            }
+          },
+          x:{
+            grid:{display:false}
+          }
+        },
+        plugins:{legend:{display:false}}
+      }
+    });
+
+    // Chart: Weekly Loss
+    const ctxWL = document.getElementById('weeklyLossChart').getContext('2d');
+    new Chart(ctxWL, {
+        type: 'bar',
+        data: {
+            labels: weeklyLossLabels,
+            datasets: [{
+                label: 'Cambio Semanal (kg)',
+                data: weeklyLoss,
+                backgroundColor: weeklyLoss.map(loss => loss < 0 ? '#10b981' : '#ef4444'), // Green for loss, Red for gain
+                borderColor: weeklyLoss.map(loss => loss < 0 ? '#059669' : '#b91c1c'),
+                borderWidth: 1,
+                borderRadius: 5,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    grid: {color:'rgba(2,6,23,.06)'},
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value, index, values) {
+                            return value + ' kg';
+                        }
+                    }
+                },
+                x: {
+                    grid: {display: false}
+                }
+            },
+            plugins: {
+                legend: {display: false},
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            let label = context.dataset.label || '';
+                            if (label) {
+                                label += ': ';
+                            }
+                            if (context.parsed.y !== null) {
+                                label += context.parsed.y > 0 ? `+${context.parsed.y.toFixed(1)} kg` : `${context.parsed.y.toFixed(1)} kg`;
+                            }
+                            return label;
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+
+    // Chart: IMC
+    const ctxI = document.getElementById('imcChart').getContext('2d');
+    new Chart(ctxI, {
+      type: 'bar',
+      data: { labels: [`IMC inicio ${bmiStart.toFixed(1)}`,`IMC actual ${bmiCurrent.toFixed(1)}`], datasets: [{ data: [bmiStart,bmiCurrent], backgroundColor: ['#ef4444','#22c55e'], borderColor: ['#b91c1c','#15803d'], borderWidth: 1, borderRadius: 8 }] },
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
+        scales:{
+          x:{
+            grid:{color:'rgba(2,6,23,.06)'},
+            ticks: {
+                callback: function(value, index, values) {
+                    return value.toFixed(1);
+                }
+            }
+          },
+          y:{grid:{display:false}}
+        },
+        plugins:{legend:{display:false}}
+      }
+    });
+
+    // Progress Bar to Next Goal
+    const currentWeight = pesos[pesos.length - 1];
+    const initialWeight = pesos[0];
+    const nextGoalWeight = 115.0; // kg
+    const startProgressAt = 119.6; // kg (current weight before starting to count towards 115)
+
+    const totalRange = startProgressAt - nextGoalWeight; // The amount of weight to lose for this goal
+    const weightLostTowardsGoal = startProgressAt - currentWeight;
+    let progressPercentage = (weightLostTowardsGoal / totalRange) * 100;
+
+    if (currentWeight <= nextGoalWeight) {
+        progressPercentage = 100; // Goal achieved
+    } else if (currentWeight > startProgressAt) {
+        progressPercentage = 0; // Haven't started towards this specific goal yet (or regressed)
+    }
+
+    const progressBar = document.getElementById('progressBar');
+    const progressText = document.getElementById('progressText');
+    const targetLine = document.getElementById('targetLine');
+
+    progressBar.style.width = `${progressPercentage}%`;
+    progressText.textContent = `${(currentWeight - nextGoalWeight).toFixed(1)} kg restantes`;
+
+    if (currentWeight <= nextGoalWeight) {
+        progressText.textContent = "¡Meta alcanzada!";
+        progressBar.style.backgroundColor = '#16a34a'; // Darker green for completion
+    } else if (progressPercentage < 0) { // If for some reason currentWeight > startProgressAt
+        progressText.textContent = ``;
+        progressBar.style.width = '0%';
+    }
+
+    // Position the target line. This will be a simple marker at the 115kg point relative to the startProgressAt and a bit below.
+    // Let's assume the bar visually represents from 'startProgressAt' down to 'nextGoalWeight'.
+    // The 'left' property needs to represent where 115kg would be.
+    // 119.6 (0% of progress) ---- 115 (100% of progress)
+    // If current weight is 119.6, remaining is 4.6. If current is 117, remaining 2.
+    // The target line should be at the "end" of the progress for the 115kg mark.
+    
+    // Calculate the position of the 115kg mark if the bar represents from 119.6kg (0%) to 115kg (100%).
+    // The target line is a fixed point. If the bar represents progress from 119.6kg to 115kg,
+    // the 115kg target should be at the very end of this conceptual bar.
+    // So, we want the line to be at the 100% mark of the progress bar, which means `left: 100%`.
+    // We adjust it by its own width to be truly at the end.
+    targetLine.style.left = `calc(100% - 2px)`; 
+    if (currentWeight <= nextGoalWeight) { // If goal is reached, hide the target line as it's now irrelevant for "next" goal.
+        targetLine.style.display = 'none';
+    } else {
+        targetLine.style.display = 'block';
+    }
+
+
+    // Menú interactivo - macros
+    function parseSel(id){
+      try { return JSON.parse(document.getElementById(id).value); }
+      catch(e){ return {kcal:0,carbs:0,protein:0,fat:0}; }
+    }
+    function actualizarMacros(){
+      const d = parseSel('desayuno');
+      const s = parseSel('snack');
+      const c = parseSel('comida');
+      const e = parseSel('cena');
+      const total = {
+        kcal: d.kcal+s.kcal+c.kcal+e.kcal,
+        carbs: d.carbs+s.carbs+c.carbs+e.carbs,
+        protein: d.protein+s.protein+c.protein+e.protein,
+        fat: d.fat+s.fat+c.fat
+      };
+      document.getElementById('macros').innerHTML =
+        `<strong>Calorías:</strong> ${total.kcal.toFixed(0)} kcal · 
+         <strong>Carbs netos:</strong> ${total.carbs.toFixed(0)} g · 
+         <strong>Proteína:</strong> ${total.protein.toFixed(0)} g · 
+         <strong>Grasa:</strong> ${total.fat.toFixed(0)} g`;
+    }
+    ['desayuno','snack','comida','cena'].forEach(id => {
+      document.getElementById(id).addEventListener('change', actualizarMacros);
+    });
+    actualizarMacros();
+  </script>
+</body>
+</html>
