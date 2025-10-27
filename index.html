@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Goplemmings Keto Dashboard — Actualizado al 27 Oct 2025</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+  /* Paleta moderna: Base (Slate), Acento (Teal) */
+  body{font-family:'Inter',sans-serif;background:#f0f4f8;color:#0f172a}
+  .card{background:#fff;border-radius:1.5rem;box-shadow:0 10px 20px rgba(15,23,42,.06);padding:1.5rem;transition:transform 0.3s ease-in-out;border:1px solid #e2e8f0;}
+  .card:hover{transform:translateY(-2px);box-shadow:0 15px 30px rgba(15,23,42,.1);}
+  
+  /* Nuevo Header */
+  .header-bg{background:linear-gradient(145deg, #0d9488, #0f766e);border-bottom-left-radius:3rem;border-bottom-right-radius:3rem}
+  
+  /* Estilo para las estadísticas principales */
+  .stat{background:rgba(255,255,255,.2);backdrop-filter:blur(5px);border-radius:1rem;color:#fff;box-shadow:0 2px 8px rgba(0,0,0,0.1);padding:1rem}
+  .stat-value{font-size:clamp(1.8rem, 5vw, 3.2rem);line-height:1;font-weight:800}
+  
+  /* Frases de motivación con degradado (Estilo Cita) */
+  .base-quote-style{
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      /* Ajuste el tamaño para que se vea más grande y con impacto, como el ejemplo */
+      font-size:clamp(1.8rem, 6vw, 3rem); 
+      line-height:1.2;
+      font-weight:900;
+      letter-spacing:-0.03em;
+      transition: all 0.5s ease;
+      /* FIX CRÍTICO: Sombra de texto para asegurar visibilidad del degradado sobre fondo blanco */
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.15); 
+  }
+  .gradient-teal{background:linear-gradient(45deg,#0d9488,#14b8a6,#0f766e);} /* Teal (Cian/Verde-azulado) */
+  .gradient-blue{background:linear-gradient(45deg,#3b82f6,#2563eb,#1d4ed8);} /* Blue (Azul) */
+  .gradient-purple{background:linear-gradient(45deg,#8b5cf6,#7c3aed,#6d28d9);} /* Purple (Violeta) */
+  .gradient-green{background:linear-gradient(45deg,#10b981,#059669,#047857);} /* Green (Verde Esmeralda) */
+  .gradient-indigo{background:linear-gradient(45deg,#6366f1,#4f46e5,#4338ca);} /* Indigo (Añil) */
+  .gradient-cyan{background:linear-gradient(45deg,#06b6d4,#0891b2,#0e7490);} /* Cyan (Cian) */
+  
+  /* Estilo para la lista de comentarios */
+  .comment-item{display:flex;align-items:flex-start;gap:.75rem;background:#f0fdfa;border-left:4px solid #14b8a6;border-radius:.75rem;padding:.8rem 1rem;font-size:.95rem;color:#0e7490}
+  
+  /* Estilo de tabla */
+  table{border-collapse:collapse;width:100%;font-size:.9rem;border-radius:0.75rem;overflow:hidden;}
+  th,td{border:none;padding:.8rem;text-align:left;border-bottom:1px solid #e2e8f0;}
+  th{background:#f1f5f9;font-weight:700;color:#1e293b}
+  tr:last-child td{border-bottom:none;}
+  tr:nth-child(even) td{background:#f8fafc;}
+
+  /* Estilo para los chips de fecha */
+  .date-chip {
+      /* Flex none para evitar que los chips se envuelvan y forzar el scroll horizontal */
+      flex: none;
+      background: #f0fdfa; /* Teal 50 */
+      border: 1px solid #99f6e4; /* Teal 200 */
+      color: #0e7490; /* Teal 800 */
+      border-radius: 0.5rem; /* rounded-lg */
+      padding: 0.375rem 0.75rem; /* px-3 py-1.5 */
+      font-weight: 600; /* font-semibold */
+      text-align: center;
+      font-size: 0.875rem; /* text-sm */
+      transition: all 0.2s ease;
+      /* Asegura que haya espacio entre chips en el scroll */
+      margin-right: 0.5rem; 
+  }
+  .date-chip-active {
+      background: #bfdbfe; /* Blue 200 */
+      border: 1px solid #60a5fa; /* Blue 400 */
+      color: #1e40af; /* Blue 900 */
+      font-weight: 900; /* font-black */
+  }
+
+  /* Estilos para el contenedor de scroll de fechas */
+  .date-scroll-container {
+      overflow-x: scroll;
+      padding-bottom: 0.5rem; /* Espacio para la barra de scroll */
+      /* No ocultar scrollbar para que se vea el "slider" en desktop */
+      -webkit-overflow-scrolling: touch;
+      /* Muestra la barra de desplazamiento en todos los navegadores */
+  }
+
+  /* Estilos para el botón LLM y área de respuesta - Se mantienen los estilos por si se reincorpora la funcionalidad */
+  .llm-button {
+      background-color: #3b82f6;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.75rem;
+      font-weight: 700;
+      transition: background-color 0.3s ease;
+  }
+  .llm-button:hover {
+      background-color: #2563eb;
+  }
+  .llm-button:disabled {
+      background-color: #93c5fd;
+      cursor: not-allowed;
+  }
+  .llm-response {
+      background: #eef2ff;
+      border: 1px solid #c7d2fe;
+      border-radius: 0.75rem;
+      padding: 1.25rem;
+      white-space: pre-wrap;
+  }
+</style>
+</head>
+<body class="text-slate-800">
+
+<header class="header-bg text-white px-4 sm:px-8 md:px-16 pt-8 pb-16 md:pt-12 md:pb-20 shadow-2xl">
+  <div class="flex flex-col sm:flex-row items-center gap-6 md:gap-8 max-w-7xl mx-auto">
+    <!-- Logotipo --><img src="https://i.postimg.cc/d0dTJTR2/logo.png" alt="Logo Goplemmings" class="w-24 sm:w-32 md:w-40 rounded-full shadow-xl object-contain ring-4 ring-white/30"/>
+    <div class="flex-1 text-center sm:text-left">
+      <h1 class="text-3xl sm:text-5xl md:text-6xl font-black leading-tight tracking-tighter">Goplemmings Keto</h1>
+      <p class="text-md sm:text-xl md:text-2xl opacity-90 mt-2 font-light">Reporte de progreso del 1 de julio al 27 de octubre de 2025</p>
+    </div>
+  </div>
+  <!-- Stats en tarjetas flotantes --><div class="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 mt-10 max-w-7xl mx-auto">
+    <div class="stat text-center">
+      <p class="stat-value" id="totalLost">−21.4 kg</p>
+      <p class="text-xs sm:text-sm uppercase tracking-wider opacity-80 mt-1">Peso perdido total</p>
+    </div>
+    <div class="stat text-center">
+      <p class="stat-value">17</p>
+      <p class="text-xs sm:text-sm uppercase tracking-wider opacity-80 mt-1">Semanas de constancia</p>
+    </div>
+    <div class="stat text-center">
+      <p class="stat-value" id="imcPoints">−6.7</p>
+      <p class="text-xs sm:text-sm uppercase tracking-wider opacity-80 mt-1">Reducción de IMC</p>
+    </div>
+    <div class="stat text-center">
+      <p class="stat-value" id="imcStatus">36.1</p>
+      <p class="text-xs sm:text-sm uppercase tracking-wider opacity-80 mt-1">IMC actual (Grado II)</p>
+    </div>
+  </div>
+</header>
+
+<main class="container mx-auto px-4 pb-16 -mt-12 sm:-mt-16 relative z-10 max-w-7xl">
+
+  <!-- Fechas clave chips (IMPLEMENTADO SLIDE HORIZONTAL) --><section class="card mt-6">
+    <h2 class="text-2xl font-black mb-4 border-b pb-2 text-teal-700">Fechas Clave y Registro de Peso (kg)</h2>
+    <!-- Contenedor con scroll horizontal --><div id="dateScrollContainer" class="date-scroll-container flex flex-nowrap gap-x-2">
+      <!-- Los chips están en una sola fila ahora --><span class="date-chip">01 Jul · <strong>135.6</strong></span>
+      <span class="date-chip">08 Jul · <strong>130.7</strong></span>
+      <span class="date-chip">14 Jul · <strong>129.6</strong></span>
+      <span class="date-chip">21 Jul · <strong>129.1</strong></span>
+      <span class="date-chip">28 Jul · <strong>127.6</strong></span>
+      <span class="date-chip">04 Ago · <strong>126.1</strong></span>
+      <span class="date-chip">11 Ago · <strong>124.2</strong></span>
+      <span class="date-chip">18 Ago · <strong>123.0</strong></span>
+      <span class="date-chip">25 Ago · <strong>122.5</strong></span>
+      <span class="date-chip">01 Sep · <strong>122.5</strong></span>
+      <span class="date-chip">08 Sep · <strong>119.6</strong></span>
+      <span class="date-chip">13 Sep · <strong>118.0</strong></span>
+      <span class="date-chip">22 Sep · <strong>117.6</strong></span>
+      <span class="date-chip">29 Sep · <strong>116.6</strong></span>
+      <span class="date-chip">06 Oct · <strong>117.1</strong></span>
+      <span class="date-chip">13 Oct · <strong>115.2</strong></span>
+      <span class="date-chip">20 Oct · <strong>114.3</strong></span>
+      <!-- Última fecha: Color azul resaltado y SIN MARGEN A LA DERECHA --><span class="date-chip date-chip-active !mr-0">27 Oct · <strong>114.2</strong></span>
+    </div>
+  </section>
+  
+  <!-- Frase + progreso (MODIFICADA CON CAROUSEL) --><section class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
+    <!-- Frase de Motivación (Card modificada para el carrusel) --><div class="card lg:col-span-2 flex flex-col justify-between relative">
+        <!-- Controles de navegación --><div class="absolute top-4 right-4 flex space-x-2 z-10">
+            <button id="prevPhrase" class="p-2 rounded-full bg-teal-100 hover:bg-teal-200 text-teal-700 transition" aria-label="Frase anterior">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            </button>
+            <button id="nextPhrase" class="p-2 rounded-full bg-teal-100 hover:bg-teal-200 text-teal-700 transition" aria-label="Siguiente frase">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+        </div>
+
+        <div class="flex-grow flex flex-col justify-center text-center py-4">
+            <!-- Frase principal con formato de cita --><p id="motivationPhrase" class="base-quote-style gradient-teal transition duration-300"></p> 
+            <!-- Subtítulo de apoyo --><p id="motivationSubtitle" class="text-sm text-slate-500 mt-4 italic"></p>
+        </div>
+
+        <!-- Indicador de frase (puntos) --><div id="phraseDots" class="flex justify-center mt-3 space-x-1"></div>
+    </div>
+    
+    <!-- Barra de Progreso a la Meta --><div class="card">
+      <h3 class="text-lg sm:text-xl font-bold mb-3 text-slate-700">Progreso hacia tu Próxima Meta: &lt; 110 kg</h3>
+      <div class="w-full bg-teal-100 rounded-full h-8 overflow-hidden">
+        <!-- Calculado para el nuevo objetivo de 110 kg --><div id="goalBar" class="bg-teal-600 h-8 text-right pr-3 flex items-center justify-end text-white font-extrabold text-sm transition-all duration-500" style="width:83.6%">4.2 kg restantes (Meta 110.0 kg)</div>
+      </div>
+      <p class="text-sm text-teal-600 mt-2 font-medium">¡Estás a menos de 5 kg del gran hito de 110 kg! Sigue con la disciplina.</p>
+    </div>
+  </section>
+
+  <!-- Evolución + Pérdida semanal (COMBINADO Y REDUCIDO) --><section class="card mt-6">
+    <h2 class="text-2xl font-black mb-6 border-b pb-2 text-teal-700">Evolución y Ritmo de Pérdida</h2>
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6"> <!-- Reducción de la cuadrícula --><div class="lg:col-span-3">
+        <h3 class="text-xl font-semibold mb-2">Peso (kg) vs. Pérdida Semanal (Doble Eje)</h3>
+        <div class="p-4 bg-slate-50 rounded-xl border">
+          <canvas id="combinedWeightChart"></canvas>
+        </div>
+        <p class="mt-4 text-sm text-gray-600">
+          <strong>Comentario:</strong> Observa el gráfico. La línea de tu peso sigue una **clara trayectoria descendente**. La pequeña pérdida de esta semana ($-0.1$ kg) se llama **"meseta de consolidación"**. Es el cuerpo reafirmando el tejido después de grandes caídas. El hecho de que la ropa te quede holgada lo confirma: **estás perdiendo tallas y grasa, no solo agua**. ¡Confía en el proceso!
+        </p>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Nueva Sección: Macros KETO y Proyección --><section class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+    <!-- Resumen de Macros KETO (Nueva sección) --><div class="card md:col-span-1 flex flex-col">
+      <h2 class="text-xl font-black mb-3 text-teal-700">Resumen de Macros KETO</h2>
+      <div class="flex-grow h-48">
+        <canvas id="pieMacros"></canvas>
+      </div>
+      <p class="text-sm text-slate-500 mt-4 text-center">Distribución de energía recomendada para cetosis.</p>
+    </div>
+    
+    <!-- Proyección de peso (Actualizada a -0.9 kg/sem) --><div class="card md:col-span-2">
+      <h2 class="text-xl font-black mb-4 text-teal-700">Proyección de peso (con base a −0.9 kg/sem)</h2>
+      <table>
+        <thead><tr><th>Fecha</th><th>Peso estimado</th></tr></thead>
+        <tbody>
+          <!-- Recalculado desde 114.2 kg con -0.9 kg/sem --><tr><td>03 Nov 2025</td><td>≈ 113.3 kg</td></tr>
+          <tr><td>10 Nov 2025</td><td>≈ 112.4 kg</td></tr>
+          <tr><td>01 Dic 2025</td><td>≈ 109.8 kg</td></tr>
+          <tr><td>01 Ene 2026</td><td>≈ 106.6 kg</td></tr>
+        </tbody>
+      </table>
+      <p class="text-xs text-slate-500 mt-4">Estimaciones con ritmo acelerado (-0.9 kg/sem). **¡El objetivo de 110 kg se acerca más rápido!** Tu constancia se ve reflejada en tus resultados, la tendencia es muy fuerte.</p>
+    </div>
+  </section>
+
+  <!-- IMC y Filosofía (MODIFICADA) --><section class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+    <!-- IMC (TEXTO EXPANDIDO AQUÍ) --><div class="card md:col-span-1">
+      <h2 class="text-xl font-black mb-4 text-teal-700">IMC: inicio vs. actual</h2>
+      <div class="w-full h-48 mx-auto">
+        <canvas id="imcChart"></canvas> 
+      </div>
+      <div class="mt-4">
+        <h3 class="text-lg font-semibold text-slate-700">Tu progreso en el IMC: Un Cambio Significativo</h3>
+        <p class="text-base text-slate-600 mt-2 leading-relaxed">
+            Tu Índice de Masa Corporal (IMC) ha experimentado un descenso crucial. Pasaste de la categoría de **Obesidad Mórbida (42.8)** a la de **Obesidad Grado II (36.1)**. 
+            <br><br>
+            Esta reducción de **6.7 puntos** es una victoria masiva en términos de salud. No solo es un cambio estético, sino que disminuye drásticamente los riesgos asociados a la obesidad más severa. ¡Estás a punto de dejar atrás el Grado II! Confía en que tu cuerpo responde a tu disciplina.
+        </p>
+        <div class="mt-3 p-3 bg-teal-50 rounded-lg text-teal-800 font-semibold text-sm border border-teal-200">
+            Próximo Gran Hito: Salir de Obesidad Grado II (IMC &lt; 35). ¡El objetivo está a la vista!
+        </div>
+      </div>
+    </div>
+    
+    <!-- TRES LIBROS FUSIONADOS --><div class="card md:col-span-2">
+      <h2 class="text-xl sm:text-2xl font-extrabold mb-3 text-teal-700">Propósito, Intencionalidad y Ahorro de Salud (Frankl, Make Time & Babilonia)</h2>
+      <div class="space-y-4 text-base text-slate-700">
+        <!-- IMAGEN MEDITANDO.PNG AQUÍ --><img src="https://raw.githubusercontent.com/GuillermoOseguera/gopketo/main/meditando.png" alt="Persona meditando para enfoque y energía" class="w-full h-auto object-contain rounded-xl shadow-lg border border-slate-100"/>
+        
+        <p class="font-semibold text-teal-800 pt-4">Tu progreso esta semana es una lección de **Ahorro de Salud**. La disciplina es tu Capital.</p>
+        
+        <p class="leading-relaxed">
+          **1. El hombre más rico de Babilonia:** El primer principio es "Una parte de todo lo que ganes es tuya para guardar". En la salud, esto significa: **Una parte de todo tu esfuerzo es tuyo para guardar**. Tu pequeña pérdida de $-0.1$ kg NO fue una semana perdida, fue una semana de **consolidación de capital**. Los $21.4$ kg que has perdido son tu tesoro de salud, y esta semana lo blindaste (venciendo la flacidez) y notaste los **primeros dividendos** (ropa holgada).
+        </p>
+        
+        <p class="leading-relaxed">
+          **2. Make Time:** Al igual que en *Make Time*, tú elegiste dónde enfocar tu **Energía y Atención**. Cada decisión cetogénica sigue siendo tu **Highlight** diario. No te rendiste ante el *Bandwagon* (el impulso de volver a viejos hábitos), sino que elegiste activamente el esfuerzo que te acerca a tu mejor versión. 
+        </p>
+        
+        <p class="leading-relaxed">
+          **3. El hombre en busca de sentido:** Frankl nos recuerda que el sufrimiento o la disciplina (la pequeña frustración de esta semana) tiene sentido si hay un propósito. **Tu propósito** es la **libertad** que has ganado: libertad de Obesidad Mórbida, libertad de riesgos de salud. Tú elegiste la actitud de volver a la disciplina.
+        </p>
+        
+        <p class="text-sm italic text-slate-600 border-t pt-3">
+          **La Meta:** Sigue "pagándote a ti mismo" con disciplina diaria. El gran descenso que esperas vendrá después de este periodo de consolidación. ¡La siguiente semana será de enormes retornos!
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Imagen keto + metas --><section class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+    <!-- Metas y Progreso (MODIFICADA) --><div class="card flex flex-col justify-center items-center p-6 bg-teal-50 border-teal-200">
+      <h3 class="text-2xl font-black mb-4 text-teal-700">Metas y Estrategia de Progreso</h3>
+      <ul class="space-y-3 text-base text-left w-full text-slate-800">
+        <li class="flex items-center gap-2"><span class="text-xl text-teal-600">✓</span> Bajar de 130 kg — <strong class="text-teal-700">Conseguido.</strong></li>
+        <li class="flex items-center gap-2"><span class="text-xl text-teal-600">✓</span> Perder más de 10 kg — <strong class="text-teal-700">Conseguido.</strong></li>
+        <li class="flex items-center gap-2"><span class="text-xl text-teal-600">✓</span> Romper 120 kg — <strong class="text-teal-700">Conseguido.</strong></li>
+        <li class="flex items-center gap-2"><span class="text-xl text-teal-600">✓</span> **Perder 20 kg o más** — <strong class="text-teal-700">¡Conseguido! (21.4 kg perdidos)</strong></li>
+        <!-- ¡META DE 115 KG CONSEGUIDA! --><li class="flex items-center gap-2"><span class="text-xl text-teal-600">✓</span> **Romper 115 kg** — <strong class="text-teal-700">¡CONSEGUIDO! (Peso actual 114.2 kg)</strong></li>
+        <li class="flex items-center gap-2"><span class="text-xl text-amber-500">🎯</span> **Próxima meta:** **&lt; 110 kg**. ¡A solo 4.2 kg de distancia!</li>
+        <li class="flex items-center gap-2"><span class="text-xl text-slate-400">→</span> Siguientes: &lt; 105 kg y &lt; 100 kg.</li>
+      </ul>
+
+      <div class="mt-6 w-full pt-4 border-t border-teal-200">
+        <h4 class="text-lg font-bold mb-3 text-teal-800">Tips de Impulso Adicional:</h4>
+        <!-- BOLDING NORMALIZADO --><ul class="list-disc list-inside text-sm text-slate-700 space-y-2">
+          <li><strong>¡Sigue con esa mentalidad!</strong> El error no está en caer, sino en no levantarse. Ya probaste que puedes volver al plan.</li>
+          <li><strong>Hidratación Consciente:</strong> Aumenta la ingesta de agua pura y electrolitos, especialmente si tienes ayuno intermitente. Mejora la saciedad y el metabolismo.</li>
+          <li><strong>Prioriza el Sueño:</strong> Asegúrate de dormir 7-8 horas. Un buen descanso regula las hormonas del hambre (grelina/leptina), clave en Keto.</li>
+          <li><strong>Gestión de Estrés:</strong> El estrés crónico libera cortisol, que puede ralentizar la pérdida de peso. Dedica tiempo a la relajación o meditación.</li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="card p-4 bg-white"> <!-- Fondo de la tarjeta ahora es blanco --><img src="https://raw.githubusercontent.com/GuillermoOseguera/gopketo/main/gopketoV2.png" alt="Imagen motivacional de dieta Keto" class="mx-auto w-full max-w-sm rounded-2xl shadow-xl object-contain"/> <!-- object-contain para que la imagen no se recorte y se ajuste --><div class="mt-6 pt-4 border-t border-slate-100 text-center">
+        <h4 class="text-lg font-bold mb-2 text-teal-800">Ventajas de la Dieta Cetogénica:</h4>
+        <p class="text-base text-slate-700 leading-relaxed text-justify">
+          La dieta Keto es mucho más que una simple reducción de carbohidratos. Su principal ventaja es el cambio metabólico que fuerza al cuerpo a utilizar **grasa (cetonas)** como fuente primaria de energía, proceso conocido como cetosis. 
+          Este estado no solo promueve una quema de grasa más eficiente y continua, sino que también ofrece beneficios notables para tu bienestar diario. Al estabilizar los niveles de azúcar en la sangre, experimentarás una **mayor saciedad** a lo largo del día, lo que facilita el control de las porciones y reduce los antojos. Además, el uso de cetonas como combustible cerebral proporciona una **energía más estable y sostenida**, lo que se traduce en mayor claridad mental, concentración y menos fatiga a lo largo de tu jornada.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Tu historia hasta hoy (SECCIÓN AMPLIADA, SUBIDA ANTES DE COMENTARIOS) --><section class="card mt-6">
+    <h2 class="text-2xl font-black mb-4 border-b pb-2 text-teal-700">Tu Historia de Éxito: Disciplina Inquebrantable</h2>
+    <p class="text-base text-slate-700 leading-relaxed mb-4">
+      Tu viaje de **17 semanas** es un testimonio de **disciplina inquebrantable**. Has logrado una pérdida total de **21.4 kg**, lo que se traduce en una caída de **6.7 puntos de IMC** (de Obesidad Mórbida 42.8 a Obesidad Grado II 36.1).
+    </p>
+
+    <h3 class="text-xl font-bold mb-3 text-teal-800">El Valor Real de tu Constancia: Una Mentalidad a Prueba de Balanza</h3>
+    <p class="text-base text-slate-700 leading-relaxed mb-4">
+        Tu progreso de 17 semanas es una **victoria sobre las estadísticas**. La mayoría de las personas que inician un plan estricto como Keto abandonan antes del segundo mes. Tú no solo superaste ese umbral, sino que mantuviste un ritmo de pérdida constante, lo cual es un logro de disciplina incalculable.
+        <br><br>
+        La semana pasada tuviste una lección crucial sobre cómo funciona el cuerpo. El aumento de **$+0.5$ kg** fue pura **retención de agua y sodio**, un fenómeno común que puede magnificarse por el **estrés** (el desánimo genera cortisol) y la recarga de glucógeno por el breve descanso de la dieta (Lun-Mié).
+        <br><br>
+        **Pero aquí está tu triunfo:** Al decidir volver al plan, tu cuerpo no tardó en responder. El descenso de **$-1.9$ kg** y luego el de **$-0.9$ kg** y ahora el **$-0.1$ kg** de consolidación, demuestran que tu metabolismo está completamente adaptado a la quema de grasa. ¡Esto demuestra que tu **resiliencia** es tu mayor superpoder!
+    </p>
+
+    <h3 class="text-xl font-bold mb-3 text-teal-800">Los Beneficios Ocultos de tus 21.4 Kilogramos Perdidos</h3>
+    <ul class="list-disc list-inside text-base text-slate-700 space-y-3 mb-5">
+      <li>
+        <strong>Impacto Articular Multiplicado:</strong> La pérdida de 21.4 kg significa que has quitado el equivalente a **85.6 kg de presión** (4 veces el peso perdido) de tus rodillas y tobillos. Este alivio mejora significativamente tu **movilidad diaria** y reduce el riesgo de desgaste a largo plazo.
+      </li>
+      <li>
+        <strong>Salud Cardiovascular Mejorada:</strong> Con un descenso de 6.7 puntos de IMC, has reducido la grasa visceral peligrosa. Esto se traduce en **menor riesgo de hipertensión arterial** y una **disminución real de la carga de trabajo** que tu corazón soporta a diario.
+      </li>
+      <li>
+        <strong>Calidad de Sueño y Energía:** La reducción de peso, especialmente alrededor del cuello y el tronco, mejora la respiración nocturna y disminuye la apnea. El resultado son **noches de sueño más profundo y reparador**, lo que naturalmente te da **más energía y enfoque mental** durante el día.
+      </li>
+      <li>
+        <strong>Resistencia Metabólica Rota:</strong> Al mantener el estado de cetosis, has reeducado a tu cuerpo, mejorando la **sensibilidad a la insulina** y estabilizando los niveles de azúcar en sangre. Este es el paso más crucial para alejarte de problemas metabólicos futuros.
+      </li>
+    </ul>
+
+    <h3 class="text-xl font-bold mb-3 text-teal-800">¡Tu Camino es Sostenible! La Resiliencia es tu Superpoder</h3>
+    <p class="text-base text-slate-700 leading-relaxed">
+        **¡Felicidades! Has superado el hito de los 20 kg perdidos y has roto la barrera de los 115 kg.** La **Próxima Gran Meta de $< 110$ kg** está a la vista.
+        <br><br>
+        Sigue enfocándote en la disciplina que te trajo hasta aquí. Celebra el hecho de que la ropa te queda mejor, pues esa sensación es mucho más confiable que cualquier número en la balanza. Recuerda la lección de esta semana: el progreso es una línea, no un punto. ¡Tu esfuerzo es innegable y tu capacidad de resiliencia es tu mayor activo!
+    </p>
+
+    <div class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+      <div class="p-3 rounded-xl border border-teal-100 bg-teal-50/70 shadow-md font-semibold text-teal-800">• “La constancia le gana al impulso.”</div>
+      <div class="p-3 rounded-xl border border-teal-100 bg-teal-50/70 shadow-md font-semibold text-teal-800">• “No compites con nadie, solo con tu yo de ayer.”</div>
+      <div class="p-3 rounded-xl border border-teal-100 bg-teal-50/70 shadow-md font-semibold text-teal-800">• “Un mal día no cancela un buen plan.”</div>
+      <div class="p-3 rounded-xl border border-teal-100 bg-teal-50/70 shadow-md font-semibold text-teal-800">• “Cuando cuidas tu cuerpo, tu cuerpo te cuida.”</div>
+    </div>
+  </section>
+
+  <!-- Comentarios semanales (texto) --><section class="card mt-6">
+    <h2 class="text-2xl font-black mb-4 border-b pb-2 text-teal-700">Comentarios Semana a Semana</h2>
+    <div class="space-y-4 text-sm">
+      <div class="comment-item">
+        <span class="comment-icon">🔥</span>
+        <p><strong>1–8 jul:</strong> Bajaste casi 5 kg. Efecto inicial (glucógeno/agua) + inicio de cetosis. **Arranque espectacular**.</p>
+      </div>
+      <div class="comment-item">
+        <span class="comment-icon">⬇️</span>
+        <p><strong>8–14 jul:</strong> −1.1 kg. Estabilización normal; continúas a la baja.</p>
+      </div>
+      <div class="comment-item">
+        <span class="comment-icon">🐢</span>
+        <p><strong>14–21 jul:</strong> −0.5 kg. Semana lenta pero **sin rebote**, mantienes tendencia.</p>
+      </div>
+      <div class="comment-item">
+        <span class="comment-icon">💪</span>
+        <p><strong>21–28 jul:</strong> −1.5 kg. Señal de constancia; gran manejo de comidas.</p>
+      </div>
+      <div class="comment-item">
+        <span class="comment-icon">🎉</span>
+        <p><strong>28 jul–4 ago:</strong> −1.5 kg y **IMC < 40**. Dejas obesidad mórbida atrás.</p>
+      </div>
+      <div class="comment-item">
+        <span class="comment-icon">🚀</span>
+        <p><strong>4–11 ago:</strong> −1.9 kg. El ayuno intermitente te potenció.</p>
+      </div>
+      <div class="comment-item">
+        <span class="comment-icon">🏆</span>
+        <p><strong>11–18 ago:</strong> −0.9 kg. Superaste 123.7 kg, tu mínimo del año. Consistencia real.</p>
+      </div>
+      <div class="comment-item">
+        <span class="comment-icon">🧘</span>
+        <p><strong>18–25 ago:</strong> −0.5 kg. Semana de paciencia; pérdida menor pero acumulativa.</p>
+      </div>
+      <div class="comment-item bg-amber-50 border-amber-400">
+        <span class="comment-icon text-amber-500">✅</span>
+        <p><strong>25 ago–1 sep:</strong> **0.0 kg**. Aunque la báscula no cambió, seguramente lo notaste en talla. Lo importante: **no desististe**.</p>
+      </div>
+      <div class="comment-item">
+        <span class="comment-icon">🎯</span>
+        <p><strong>1–7 sep:</strong> −3.2 kg. Rompiste la barrera de los 120 kg antes de lo esperado. **¡Felicidades!**</p>
+      </div>
+      <div class="comment-item">
+        <span class="comment-icon">🔥</span>
+        <p><strong>7–13 sep:</strong> −1.6 kg. Continúas bajando con fuerza y disciplina, manteniendo el ritmo.</p>
+      </div>
+      <div class="comment-item bg-red-50 border-red-400">
+        <span class="comment-icon text-red-500">📉</span>
+        <p><strong>13–22 sep:</strong> −0.4 kg. La pérdida se desaceleró, pero seguiste en tendencia a pesar que esta semana fueron 4 dias libres y comiste pizza, enchiladas, pambazos y pastel, sin embargo supiste equilibrar los dias.</p>
+      </div>
+      <div class="comment-item">
+        <span class="comment-icon">✅</span>
+        <p><strong>22–29 sep:</strong> −1.0 kg. Excelente; hidrátate bien y cuida electrolitos.</p>
+      </div>
+      <div class="comment-item bg-red-50 border-red-400">
+        <span class="comment-icon text-red-500">🔄</span>
+        <p><strong>29 sep–06 oct:</strong> **+0.5 kg**. ¡Es totalmente normal! Esto fue una **fluctuación temporal** (retención de agua/sodio), no grasa real. No te desanimes, sigue firme.</p>
+      </div>
+      <div class="comment-item bg-teal-50 border-teal-400">
+        <span class="comment-icon text-teal-500">🚀</span>
+        <p><strong>06–13 oct:</strong> **¡Espectacular rebote de −1.9 kg!** La subida anterior se corrigió porque al retomar el plan el jueves, tu cuerpo eliminó la retención de agua y continuó quemando grasa. **¡Felicidades por tu resiliencia!**</p>
+      </div>
+      <div class="comment-item bg-teal-100 border-teal-400">
+        <span class="comment-icon text-green-500">🎉</span>
+        <p><strong>13–20 oct:</strong> **¡Meta de 115 kg SUPERADA! (−0.9 kg)**. Una semana sólida que valida tu esfuerzo. ¡La balanza te recompensó por volver a la disciplina. **Próxima parada: 110 kg**.</p>
+      </div>
+      <!-- NUEVO COMENTARIO --><div class="comment-item bg-amber-50 border-amber-400">
+        <span class="comment-icon text-amber-500">🧘</span>
+        <p><strong>20–27 oct:</strong> **Consolidación (−0.1 kg)**. El peso bajó poco, pero la ropa más holgada significa **pérdida de grasa**. ¡Es una semana de **reafirmación**! ¡Aprovecha la motivación de la ropa para seguir!</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+<footer class="bg-slate-900 text-white text-center py-8 rounded-t-[2.5rem] mt-12">
+  <p class="text-sm opacity-80 mb-2">Hecho para Goplemmings — Octubre 2025</p>
+</footer>
+
+<script>
+  
+  // Función principal para inicializar el dashboard
+  function initializeDashboard() {
+      // --------------------------------------------------------------------------------
+      // DATOS ACTUALIZADOS: NUEVO PESO (114.2 KG) EL 27 DE OCTUBRE
+      // --------------------------------------------------------------------------------
+      const labels=['1 Jul','8 Jul','14 Jul','21 Jul','28 Jul','4 Ago','11 Ago','18 Ago','25 Ago','1 Sep','8 Sep','13 Sep','22 Sep','29 Sep', '6 Oct', '13 Oct', '20 Oct', '27 Oct'];
+      const pesos=[135.6,130.7,129.6,129.1,127.6,126.1,124.2,123.0,122.5,122.5,119.6,118.0,117.6,116.6, 117.1, 115.2, 114.3, 114.2];
+      
+      // Cálculos iniciales
+      const start=pesos[0], current=pesos[pesos.length-1];
+      const totalLost = (start - current).toFixed(1);
+      const weeks = pesos.length - 1; 
+
+      // Altura para cálculo de IMC
+      const height=1.78;
+      const bmiStart=(start/(height*height));
+      const bmiCurrent=(current/(height*height));
+      
+      // Cálculo de Obesidad Grado para el IMC actual
+      let imcStatusText = 'Normal';
+      if (bmiCurrent >= 40) imcStatusText = 'Grado III (Mórbida)';
+      else if (bmiCurrent >= 35) imcStatusText = 'Grado II (Severa)';
+      else if (bmiCurrent >= 30) imcStatusText = 'Grado I (Moderada)';
+      else if (bmiCurrent >= 25) imcStatusText = 'Sobrepeso';
+      
+      // Actualizar estadísticas del Header
+      document.getElementById('imcPoints').textContent=`${(bmiCurrent-bmiStart).toFixed(1)}`;
+      document.getElementById('imcStatus').textContent=`${bmiCurrent.toFixed(1)} (${imcStatusText})`;
+      document.getElementById('totalLost').textContent=`−${totalLost} kg`;
+
+      // Progreso hacia <110 kg (Nueva meta)
+      const initialWeight = 135.6;
+      const targetWeight = 110.0; // Nueva meta
+      const totalDifference = initialWeight - targetWeight;
+      const weightLost = initialWeight - current;
+      const pct = Math.min(100, Math.max(0, (weightLost / totalDifference) * 100));
+      const remaining = Math.max(0, (current - targetWeight)).toFixed(1);
+      
+      const bar=document.getElementById('goalBar');
+      bar.style.width=`${pct}%`;
+      bar.textContent=`${remaining} kg restantes (Meta ${targetWeight} kg)`;
+
+
+      // Pérdida semanal
+      const weeklyLoss = [];
+      const comments = [
+          "1–8 jul: Bajaste casi 5 kg. Efecto inicial (glucógeno/agua) + inicio de cetosis. Arranque espectacular.",
+          "8–14 jul: −1.1 kg. Estabilización normal; continúas a la baja.",
+          "14–21 jul: −0.5 kg. Semana lenta pero sin rebote, mantienes tendencia.",
+          "21–28 jul: −1.5 kg. Señal de constancia; gran manejo de comidas.",
+          "28 jul–4 ago: −1.5 kg y IMC < 40. Dejas obesidad mórbida atrás.",
+          "4–11 ago: −1.9 kg. El ayuno intermitente te potenció.",
+          "11–18 ago: −0.9 kg. Superaste 123.7 kg, tu mínimo del año. Consistencia real.",
+          "18–25 ago: −0.5 kg. Semana de paciencia; pérdida menor pero acumulativa.",
+          "25 ago–1 sep: 0.0 kg. Aunque la báscula no cambió, seguramente lo notaste en talla. Lo importante: no desististe.",
+          "1–7 sep: −3.2 kg. Rompiste la barrera de los 120 kg antes de lo esperado. ¡Felicidades!",
+          "7–13 sep: −1.6 kg. Continúas bajando con fuerza y disciplina, manteniendo el ritmo.",
+          "13–22 sep: −0.4 kg. La pérdida se desaceleró, pero seguiste en tendencia a pesar que esta semana fueron 4 dias libres y comiste pizza, enchiladas, pambazos y pastel, sin embargo supiste equilibrar los dias.",
+          "22–29 sep: −1.0 kg. Excelente cierre de mes; hidrátate bien y cuida electrolitos.",
+          "29 sep–06 oct: +0.5 kg. Es una fluctuación de agua y electrolitos. La pérdida neta acumulada es de 18.5 kg. Necesitas motivación para no desanimarte.",
+          "06–13 oct: -1.9 kg. Recuperaste la pérdida de agua y regresaste a la cetosis, demostrando una resiliencia impresionante a pesar del desánimo.",
+          "13–20 oct: -0.9 kg. Meta de 115 kg superada, demostrando consistencia y disciplina.",
+          "20–27 oct: -0.1 kg. Consolidación de grasa."
+      ];
+
+      for(let i = 1; i < pesos.length; i++){
+          weeklyLoss.push((pesos[i] - pesos[i - 1]));
+      }
+      
+      // --------------------------------------------------------------------------------
+      // LÓGICA DE CAROUSEL DE FRASES (NUEVA IMPLEMENTACIÓN)
+      // --------------------------------------------------------------------------------
+
+      const motivationPhrases = [
+          {
+              text: "¡Objetivo de 115 kg superado! Tu constancia está creando el hábito, no la excepción.",
+              subtitle: `Hoy no solo bajaste de peso, consolidaste tu **resiliencia** y el hecho de que la ropa te quede mejor lo demuestra. ¡${totalLost} kg perdidos y contando!`,
+              gradient: 'gradient-teal'
+          },
+          {
+              text: "La disciplina es elegir entre lo que quieres ahora y lo que más deseas a largo plazo.",
+              subtitle: "Tu fuerza reside en la resiliencia: la capacidad de volver al plan después de un bache. Eso es la verdadera victoria.",
+              gradient: 'gradient-blue'
+          },
+          {
+              text: "El hombre más rico de Babilonia: Págate a ti mismo con disciplina. ¡Tu salud es tu mayor riqueza!",
+              subtitle: "Cada día de esfuerzo es un 'Ahorro de Salud'. La pequeña pérdida de peso de esta semana es un dividendo de consolidación.",
+              gradient: 'gradient-green'
+          },
+          {
+              text: "Tu progreso de 21.4 kg es un testimonio: has transformado el peso en músculo de voluntad.",
+              subtitle: "La meseta de -0.1 kg es normal. Tu cuerpo está usando esta semana para reafirmarse. ¡El cambio en tu IMC es innegable!",
+              gradient: 'gradient-purple'
+          },
+          {
+              text: "No te enfoques en el plato, enfócate en el propósito: la libertad que te da tu salud.",
+              subtitle: "Como en 'El hombre en busca de sentido', tu esfuerzo tiene un propósito trascendente. La frustración es temporal, el resultado es para siempre.",
+              gradient: 'gradient-indigo'
+          },
+          {
+              text: "La sensación en tu ropa es el GPS más honesto de tu progreso. ¡Confía en las tallas, no en la báscula!",
+              subtitle: "Estás perdiendo grasa densa y esa es la razón por la que la ropa te queda holgada. El éxito es la resiliencia para volver a empezar cada día.",
+              gradient: 'gradient-cyan'
+          }
+      ];
+
+      let currentPhraseIndex = 0;
+      const phraseElement = document.getElementById('motivationPhrase');
+      const subtitleElement = document.getElementById('motivationSubtitle');
+      const prevButton = document.getElementById('prevPhrase');
+      const nextButton = document.getElementById('nextPhrase');
+      const dotsContainer = document.getElementById('phraseDots');
+      const gradientClasses = ['gradient-teal', 'gradient-blue', 'gradient-purple', 'gradient-green', 'gradient-indigo', 'gradient-cyan'];
+
+      // Función para actualizar el contenido y el color
+      function updateMotivationCard(index) {
+          const phrase = motivationPhrases[index];
+          
+          // Actualizar texto: Añadir comillas para el formato de cita.
+          phraseElement.textContent = `“${phrase.text}”`; 
+          subtitleElement.innerHTML = phrase.subtitle.replace(/\*\*/g, '<strong>'); 
+
+          // Quitar clases de gradiente viejas
+          gradientClasses.forEach(cls => phraseElement.classList.remove(cls));
+          
+          // Añadir clase de gradiente nueva
+          phraseElement.classList.add(phrase.gradient);
+          phraseElement.classList.add('base-quote-style'); // Usar la nueva clase de estilo de cita
+
+          // Actualizar puntos
+          dotsContainer.innerHTML = '';
+          motivationPhrases.forEach((_, i) => {
+              const dot = document.createElement('span');
+              dot.className = `w-2.5 h-2.5 rounded-full mx-1 transition-colors duration-300 cursor-pointer ${i === index ? 'bg-teal-600' : 'bg-slate-300'}`;
+              dot.addEventListener('click', () => {
+                  currentPhraseIndex = i;
+                  updateMotivationCard(currentPhraseIndex);
+              });
+              dotsContainer.appendChild(dot);
+          });
+      }
+
+      // Handlers de botones
+      prevButton.addEventListener('click', () => {
+          currentPhraseIndex = (currentPhraseIndex - 1 + motivationPhrases.length) % motivationPhrases.length;
+          updateMotivationCard(currentPhraseIndex);
+      });
+
+      nextButton.addEventListener('click', () => {
+          currentPhraseIndex = (currentPhraseIndex + 1) % motivationPhrases.length;
+          updateMotivationCard(currentPhraseIndex);
+      });
+
+      // Inicializar con la primera frase
+      updateMotivationCard(currentPhraseIndex);
+      
+      // ***************************************************************
+      // LÓGICA DE SCROLL PARA MOSTRAR EL PESO ACTUAL AL CARGAR
+      // ***************************************************************
+      const dateScrollContainer = document.getElementById('dateScrollContainer');
+      if (dateScrollContainer) {
+          // Scroll automático a la última fecha
+          // Espera un pequeño momento para que el navegador calcule el ancho total
+          setTimeout(() => {
+            dateScrollContainer.scrollLeft = dateScrollContainer.scrollWidth;
+          }, 100); 
+      }
+
+
+      // --- Gráficos Chart.js (sin cambios en la lógica) ---
+      // Función para configuración base de las gráficas
+      const baseChartOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: { 
+            backgroundColor: 'rgba(30, 41, 59, 0.9)', 
+            titleColor: '#fff',
+            bodyColor: '#e2e8f0',
+            borderRadius: 8,
+            padding: 12
+          }
+        }
+      };
+
+      // 1. Gráfico Combinado (Peso y Pérdida Semanal)
+      const combinedChartCtx = document.getElementById('combinedWeightChart');
+      if (combinedChartCtx) {
+          new Chart(combinedChartCtx,{
+            type:'bar', 
+            data:{
+              labels: labels,
+              datasets:[{
+                type: 'line',
+                label:'Peso (kg)',
+                data: pesos,
+                borderColor: '#0d9488', /* Teal */
+                backgroundColor: 'rgba(13,148,136,0.15)',
+                pointBackgroundColor: '#0d9488',
+                pointRadius: 5,
+                pointHoverRadius: 7,
+                borderWidth: 3,
+                tension: 0.4, 
+                fill: false,
+                yAxisID: 'yPeso' 
+              },
+              {
+                type: 'bar',
+                label:'Pérdida Semanal (kg)',
+                data: [NaN, ...weeklyLoss], 
+                backgroundColor: [NaN, ...weeklyLoss.map(v => v < 0 ? '#3b82f6' : (v > 0 ? '#ef4444' : '#94a3b8'))], 
+                borderRadius: 4,
+                yAxisID: 'yPerdida' 
+              }]
+            },
+            options:{
+              ...baseChartOptions,
+              plugins: {
+                ...baseChartOptions.plugins,
+                legend: { display: true, position: 'top', labels: { boxWidth: 10, color: '#0f172a' } }
+              },
+              scales: {
+                x: { grid: { display: false }, ticks: { color: '#475569' } },
+                yPeso: {
+                  type: 'linear',
+                  position: 'left',
+                  reverse: true,
+                  beginAtZero: false,
+                  grid: { color: '#f1f5f9' },
+                  ticks: { color: '#0d9488' } 
+                },
+                yPerdida: {
+                  type: 'linear',
+                  position: 'right',
+                  beginAtZero: true,
+                  grid: { drawOnChartArea: false }, 
+                  ticks: { color: '#3b82f6' } 
+                }
+              }
+            }
+          });
+      }
+
+
+      // 2. Gráfico de IMC pequeño
+      const imcChartCtx = document.getElementById('imcChart');
+      if (imcChartCtx) {
+          const bmiS = 42.8, bmiC = parseFloat(bmiCurrent).toFixed(1);
+          new Chart(imcChartCtx,{
+            type:'bar',
+            data:{labels:[`Inicio ${bmiS}` , `Actual ${bmiC}`],datasets:[{
+              data:[bmiS,bmiC],
+              backgroundColor:['#ef4444','#10b981'],
+              borderRadius: 8
+            }]},
+            options:{
+              ...baseChartOptions,
+              indexAxis:'y',
+              scales:{
+                x:{ suggestedMin: 30, suggestedMax: 50, grid: { color: '#f1f5f9' }, ticks: { color: '#475569' } },
+                y:{ grid: { display: false }, ticks: { color: '#475569' } }
+              }
+            }
+          });
+      }
+
+
+      // 3. Gráfico de Macros KETO
+      const pieMacrosCtx = document.getElementById('pieMacros');
+      if (pieMacrosCtx) {
+          new Chart(pieMacrosCtx,{
+            type:'doughnut', 
+            data:{labels:['Grasa (65%)','Proteína (30%)','Carbohidratos (5%)'],datasets:[{
+              data:[65,30,5],
+              backgroundColor:['#0d9488','#3b82f6','#f59e0b'],
+              hoverOffset: 12,
+              borderWidth: 2
+            }]},
+            options:{
+              ...baseChartOptions,
+              plugins:{
+                ...baseChartOptions.plugins,
+                legend:{ position:'bottom', labels: { boxWidth: 15, padding: 20, color: '#0f172a' } }
+              }
+            }
+          });
+      }
+  }
+
+  // Esperar a que el DOM esté completamente cargado antes de inicializar los gráficos
+  window.onload = initializeDashboard;
+
+</script>
+</body>
+</html>
