@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Goplemmings Keto Dashboard — Actualizado al 27 Oct 2025</title>
+<title>Goplemmings Keto Dashboard — Actualizado al 03 Nov 2025</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -101,6 +101,32 @@
       padding: 1.25rem;
       white-space: pre-wrap;
   }
+
+  /* Estilos para el reto de rasurado */
+  .shave-challenge-container {
+      background: linear-gradient(135deg, #f0fdfa, #ecfdf5);
+      border: 2px solid #0d9488;
+  }
+  .beard-icon {
+      /* Reemplazado por imagen, pero mantenemos esta clase si se vuelve a usar un emoji */
+      font-size: 4rem;
+      transition: color 0.5s ease, transform 0.5s ease;
+  }
+  /* Contenedor de la Polaroid */
+  .polaroid-frame {
+      border: 3px solid #fff;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      border-radius: 0.5rem;
+      background-color: #fff;
+      padding: 0.5rem 0.5rem 1.5rem 0.5rem; /* Marco inferior más ancho */
+      max-width: 150px;
+  }
+  .polaroid-frame img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 0.25rem;
+  }
 </style>
 </head>
 <body class="text-slate-800">
@@ -110,24 +136,24 @@
     <!-- Logotipo --><img src="https://i.postimg.cc/d0dTJTR2/logo.png" alt="Logo Goplemmings" class="w-24 sm:w-32 md:w-40 rounded-full shadow-xl object-contain ring-4 ring-white/30"/>
     <div class="flex-1 text-center sm:text-left">
       <h1 class="text-3xl sm:text-5xl md:text-6xl font-black leading-tight tracking-tighter">Goplemmings Keto</h1>
-      <p class="text-md sm:text-xl md:text-2xl opacity-90 mt-2 font-light">Reporte de progreso del 1 de julio al 27 de octubre de 2025</p>
+      <p class="text-md sm:text-xl md:text-2xl opacity-90 mt-2 font-light">Reporte de progreso del 1 de julio al 03 de noviembre de 2025</p>
     </div>
   </div>
   <!-- Stats en tarjetas flotantes --><div class="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 mt-10 max-w-7xl mx-auto">
     <div class="stat text-center">
-      <p class="stat-value" id="totalLost">−21.4 kg</p>
+      <p class="stat-value" id="totalLost">−20.8 kg</p>
       <p class="text-xs sm:text-sm uppercase tracking-wider opacity-80 mt-1">Peso perdido total</p>
     </div>
     <div class="stat text-center">
-      <p class="stat-value">17</p>
+      <p class="stat-value">18</p>
       <p class="text-xs sm:text-sm uppercase tracking-wider opacity-80 mt-1">Semanas de constancia</p>
     </div>
     <div class="stat text-center">
-      <p class="stat-value" id="imcPoints">−6.7</p>
+      <p class="stat-value" id="imcPoints">−6.5</p>
       <p class="text-xs sm:text-sm uppercase tracking-wider opacity-80 mt-1">Reducción de IMC</p>
     </div>
     <div class="stat text-center">
-      <p class="stat-value" id="imcStatus">36.1</p>
+      <p class="stat-value" id="imcStatus">36.3</p>
       <p class="text-xs sm:text-sm uppercase tracking-wider opacity-80 mt-1">IMC actual (Grado II)</p>
     </div>
   </div>
@@ -155,7 +181,7 @@
       <span class="date-chip">06 Oct · <strong>117.1</strong></span>
       <span class="date-chip">13 Oct · <strong>115.2</strong></span>
       <span class="date-chip">20 Oct · <strong>114.3</strong></span>
-      <!-- Última fecha: Color azul resaltado y SIN MARGEN A LA DERECHA --><span class="date-chip date-chip-active !mr-0">27 Oct · <strong>114.2</strong></span>
+      <!-- Última fecha: Color azul resaltado y SIN MARGEN A LA DERECHA --><span class="date-chip date-chip-active !mr-0">03 Nov · <strong>114.8</strong></span>
     </div>
   </section>
   
@@ -181,9 +207,9 @@
     <!-- Barra de Progreso a la Meta (Ocupa 1/3) --><div class="card">
       <h3 class="text-lg sm:text-xl font-bold mb-3 text-slate-700">Progreso hacia tu Próxima Meta: &lt; 110 kg</h3>
       <div class="w-full bg-teal-100 rounded-full h-8 overflow-hidden">
-        <!-- Calculado para el nuevo objetivo de 110 kg --><div id="goalBar" class="bg-teal-600 h-8 text-right pr-3 flex items-center justify-end text-white font-extrabold text-sm transition-all duration-500" style="width:83.6%">4.2 kg restantes (Meta 110.0 kg)</div>
+        <!-- Calculado para el nuevo objetivo de 110 kg --><div id="goalBar" class="bg-teal-600 h-8 text-right pr-3 flex items-center justify-end text-white font-extrabold text-sm transition-all duration-500" style="width:83.6%">4.8 kg restantes (Meta 110.0 kg)</div>
       </div>
-      <p class="text-sm text-teal-600 mt-2 font-medium">¡Estás a menos de 5 kg de tu proxima meta que son menos de 110 kg! Sigue con la misma disciplina.</p>
+      <p class="text-sm text-teal-600 mt-2 font-medium">¡Estás a 4.8 kg del gran hito! Retoma tu disciplina, ¡el progreso es acumulativo!</p>
     </div>
   </section>
 
@@ -195,12 +221,49 @@
           <canvas id="combinedWeightChart"></canvas>
         </div>
         <p class="mt-4 text-sm text-gray-600">
-          <strong>Comentario:</strong> Observa el gráfico. La línea de tu peso sigue una clara trayectoria descendente. La pequeña pérdida de esta semana (-0.1 kg) se llama <strong>"meseta de consolidación".</strong> Es el cuerpo reafirmando el tejido después de grandes caídas. El hecho de que la ropa te quede holgada lo confirma: <strong>"estás perdiendo tallas y grasa, no solo agua.".</strong> ¡Confía en el proceso!
+          <strong>Comentario:</strong> Observa el gráfico. La línea de tu peso muestra una pequeña subida, lo cual es la <strong>retención de líquidos y glucógeno</strong> por los días libres. Este "ruido" es temporal. Tu tendencia general sigue siendo claramente descendente. La próxima semana, al regresar a cetosis, verás una corrección rápida.
         </p>
       </div>
     </div>
   </section>
-  
+
+  <!-- NUEVA SECCIÓN: RETO BARBA CERO (INTERACTIVO) -->
+  <section class="card mt-6 shave-challenge-container">
+    <h2 class="text-2xl font-black mb-4 border-b pb-2 text-teal-700 flex items-center justify-between">
+        Reto Importante: Barba Cero 🪒 (Meta: &lt; 100.0 kg)
+        <span id="shaveStatusText" class="text-sm font-semibold text-slate-600">EN PROCESO</span>
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+        <!-- Contenedor de Imagen de Polaroid -->
+        <div class="flex flex-col items-center justify-center md:col-span-1 p-4">
+            <div id="polaroidContainer" class="polaroid-frame">
+                <!-- Imagen Polaroid (formato RAW) -->
+                <img id="beardImage" 
+                     src="https://raw.githubusercontent.com/GuillermoOseguera/gopketo/main/polaroid.jpeg" 
+                     alt="Foto Polaroid del progreso" 
+                     onerror="this.onerror=null;this.src='https://placehold.co/140x160/cccccc/333333?text=Tu+Foto+Reto';"
+                />
+            </div>
+            <p id="beardMessage" class="text-sm font-semibold text-slate-700 mt-2 text-center">Peso a perder :14.8 kg. ¡Sigue la disciplina! lo lograras</p>
+        </div>
+
+        <!-- Progreso y Descripción del Reto -->
+        <div class="md:col-span-2 space-y-4">
+            <p class="text-base text-slate-700">
+                Con la finalidad de mantenerme enfocado en esto, me comprometo a que ya que baje de 100 kilos, me quitare la barba por completo, asi como ir a Bernal y subir la peña ( hasta donde se puede sin equipo ). Esto como símbolo de tu transformación total. el cual debe ser a mas tardar a finales de Enero 2026.
+            </p>
+            <div class="w-full bg-slate-200 rounded-full h-8 overflow-hidden">
+                <div id="beardProgressBar" class="bg-teal-500 h-8 text-right pr-3 flex items-center justify-end text-white font-extrabold text-sm transition-all duration-500" style="width: 26.5%;">
+                    <span id="beardProgressText">35.6 kg restantes (Meta 100.0 kg)</span>
+                </div>
+            </div>
+            <p class="text-xs text-slate-500 italic">
+                Nota: El progreso del reto se calcula desde el peso inicial (135.6 kg) hasta la meta de 100.0 kg.
+            </p>
+        </div>
+    </div>
+  </section>
+
   <!-- Nueva Sección: Macros KETO y Proyección --><section class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
     <!-- Resumen de Macros KETO (Nueva sección) --><div class="card md:col-span-1 flex flex-col">
       <h2 class="text-xl font-black mb-3 text-teal-700">Resumen de Macros KETO</h2>
@@ -215,10 +278,10 @@
       <table>
         <thead><tr><th>Fecha</th><th>Peso estimado</th></tr></thead>
         <tbody>
-          <!-- Recalculado desde 114.2 kg con -0.9 kg/sem --><tr><td>03 Nov 2025</td><td>≈ 113.3 kg</td></tr>
-          <tr><td>10 Nov 2025</td><td>≈ 112.4 kg</td></tr>
-          <tr><td>01 Dic 2025</td><td>≈ 109.8 kg</td></tr>
-          <tr><td>01 Ene 2026</td><td>≈ 106.6 kg</td></tr>
+          <!-- Recalculado desde 114.8 kg con -0.9 kg/sem --><tr><td>10 Nov 2025</td><td>≈ 113.9 kg</td></tr>
+          <tr><td>17 Nov 2025</td><td>≈ 113.0 kg</td></tr>
+          <tr><td>01 Dic 2025</td><td>≈ 110.8 kg</td></tr>
+          <tr><td>01 Ene 2026</td><td>≈ 107.0 kg</td></tr>
         </tbody>
       </table>
       <p class="text-xs text-slate-500 mt-4">Estimaciones con ritmo acelerado (-0.9 kg/sem). **¡El objetivo de 110 kg se acerca más rápido!** Tu constancia se ve reflejada en tus resultados, la tendencia es muy fuerte.</p>
@@ -234,10 +297,23 @@
       <div class="mt-4">
         <h3 class="text-lg font-semibold text-slate-700">Tu progreso en el IMC: Un Cambio Significativo</h3>
         <p class="text-base text-slate-600 mt-2 leading-relaxed">
-            Tu Índice de Masa Corporal (IMC) ha experimentado un descenso crucial. Pasaste de la categoría de **Obesidad Mórbida (42.8)** a la de **Obesidad Grado II (36.1)**. 
+          Tu <strong>Índice de Masa Corporal</strong> ha experimentado una transformación profunda. Has pasado de la categoría de 
+          <strong>Obesidad Mórbida (42.8)</strong> a la de <strong>Obesidad Grado II (36.3)</strong>. 
             <br><br>
-            Esta reducción de **6.7 puntos** es una victoria masiva en términos de salud. No solo es un cambio estético, sino que disminuye drásticamente los riesgos asociados a la obesidad más severa. ¡Estás a punto de dejar atrás el Grado II! Confía en que tu cuerpo responde a tu disciplina.
-        </p>
+            Esta reducción de <strong>6.5 puntos</strong> no es solo un número: representa meses de decisiones, constancia y valentía. 
+    Significa menos presión en tus articulaciones, mejor rendimiento metabólico, mejor descanso y una mente más clara. 
+    Cada punto que baja tu IMC es un testimonio de que tu cuerpo <strong>responde a tu disciplina</strong> y a tu compromiso con la salud.
+    Has logrado un cambio que muchos solo sueñan: romper con años de hábitos automáticos y construir una nueva relación con la comida, 
+    el ayuno y la energía. Este descenso refleja que tu sistema hormonal y tu metabolismo <strong>están trabajando a tu favor</strong>.  
+    Aunque una semana imperfecta pueda parecer un paso atrás, tu progreso total demuestra que el proceso <strong>ya está funcionando</strong>.
+  </p>
+
+  <p style="color:#334155;">
+    Estás a punto de salir del <strong>Grado II</strong>, una frontera simbólica y poderosa. 
+    Cruzarla significará que tu salud ha entrado oficialmente en una zona más estable y sostenible.  
+    Desde aquí, cada kilo perdido tiene un efecto exponencial en tu bienestar general: menos inflamación, menos ansiedad alimentaria, 
+    y más claridad mental para mantenerte firme.    
+  </p>
         <div class="mt-3 p-3 bg-teal-50 rounded-lg text-teal-800 font-semibold text-sm border border-teal-200">
             Próximo Gran Hito: Salir de Obesidad Grado II (IMC &lt; 35). ¡El objetivo está a la vista!
         </div>
@@ -245,105 +321,96 @@
     </div>
     
     <!-- TRES LIBROS FUSIONADOS (Esta sección será REEMPLAZADA) --><div class="card md:col-span-2">
-      <h2 class="text-xl sm:text-2xl font-extrabold mb-3 text-teal-700">Propósito, Intencionalidad y Ahorro de Salud (Frankl el hombre en busca de sentido, Make Time & el hombre mas rico de Babilonia)</h2>
+      <h2 class="text-xl sm:text-2xl font-extrabold mb-3 text-teal-700">Propósito, Intencionalidad y Ahorro de Salud (Frankl, Make Time & Babilonia)</h2>
       <div class="space-y-4 text-base text-slate-700">
         <!-- IMAGEN MEDITANDO.PNG AQUÍ --><img src="https://raw.githubusercontent.com/GuillermoOseguera/gopketo/main/meditando.png" alt="Persona meditando para enfoque y energía" class="w-full h-auto object-contain rounded-xl shadow-lg border border-slate-100"/>
         
-        <p class="font-semibold text-teal-800 pt-4">Tu progreso esta semana es una lección de Ahorro de Salud. La disciplina es tu Capital.</p>
+               
+        <div style="font-family: 'Inter', sans-serif; background-color: #f9fafb; border-radius: 16px; padding: 24px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); line-height: 1.6; color: #1e293b;">
+          <h2 style="color:#0f172a; font-size:1.5em; margin-bottom:0.5em;">💡 Tu progreso esta semana es una lección de <strong>Ahorro de Salud</strong></h2>
+          <p style="margin-top:0; color:#334155;">La disciplina es tu <strong>capital vital</strong>. No se pierde en una semana: se construye día con día, comida tras comida, decisión tras decisión.</p>
         
-        <p class="leading-relaxed">
-          1. El hombre más rico de Babilonia: El primer principio es "Una parte de todo lo que ganes es tuya para guardar". En la salud, esto significa: Una parte de todo tu esfuerzo es tuyo para guardar. Tu pequeña pérdida de -0.1 kg NO fue una semana perdida, fue una semana de consolidación de capital. Los 21.4$ kg que has perdido son tu tesoro de salud, y esta semana lo blindaste y notaste los primeros dividendos (ropa holgada).
-        </p>
+          <hr style="border:none; border-top:1px solid #e2e8f0; margin:16px 0;">
         
-        <p class="leading-relaxed">
-          2. Make Time: Al igual que en Make Time, tú elegiste dónde enfocar tu Energía y Atención. Cada decisión cetogénica sigue siendo tu Highlight diario. No te rendiste ante el Bandwagon (el impulso de volver a viejos hábitos), sino que elegiste activamente el esfuerzo que te acerca a tu mejor versión. 
-        </p>
+          <h3 style="color:#0f172a;">📘 1. El hombre más rico de Babilonia</h3>
+          <p style="color:#334155;">
+            “Una parte de todo lo que ganes es tuya para guardar.”  
+            En tu camino cetogénico, significa que <strong>una parte de todo tu esfuerzo permanece en ti</strong>.  
+            Ese ligero aumento de <strong>+0.6 kg</strong> no borra tu capital de <strong>−20.8 kg</strong> acumulados.  
+            Sigues siendo el inversionista que se paga primero: hoy volviste a invertir en ti.
+          </p>
         
-        <p class="leading-relaxed">
-          3. El hombre en busca de sentido: Frankl nos recuerda que el sufrimiento o la disciplina (la pequeña frustración de esta semana) tiene sentido si hay un propósito. **Tu propósito** es la libertad que has ganado: libertad de Obesidad Mórbida, libertad de riesgos de salud. Tú elegiste la actitud de volver a la disciplina.
-        </p>
+          <h3 style="color:#0f172a;">⏰ 2. Make Time</h3>
+          <p style="color:#334155;">
+            En <em>Make Time</em> aprendemos que el secreto está en decidir dónde poner la <strong>energía y atención</strong>.  
+            Aunque esta semana el entorno te distrajo, tu <strong>Highlight</strong> fue elegir volver.  
+            Esa decisión —no rendirte— vale más que siete días perfectos.  
+            Has demostrado que tu enfoque es más fuerte que la inercia.
+          </p>
         
-        <p class="text-sm italic text-slate-600 border-t pt-3">
-          Meta: Sigue "pagándote a ti mismo" con disciplina diaria. El gran descenso que esperas vendrá después de este periodo de consolidación. ¡La siguiente semana será de enormes beneficios! adicional a la perdida de peso, haz terminado de leer 4 libros en este lapso de tiempo algo que te ha servido para aplicar los conceptos de cada uno de esos libros
-        </p>
-      </div>
-    </div>
+          <h3 style="color:#0f172a;">🧠 3. El hombre en busca de sentido</h3>
+          <p style="color:#334155;">
+            Viktor Frankl enseñó que el sufrimiento solo cobra sentido cuando tiene un propósito.  
+            La frustración por romper la dieta no es derrota: es <strong>parte del camino</strong>.  
+            Tu propósito es la <strong>libertad</strong> que estás conquistando con cada ayuno, cada comida consciente, cada mañana en la que eliges continuar.  
+            Esta semana solo confirmó que tu plan <em>puede resistir</em> los tropiezos sin colapsar.
+          </p>
+        
+          <hr style="border:none; border-top:1px solid #e2e8f0; margin:16px 0;">
+        
+          <h3 style="color:#0f172a;">🎯 La Meta</h3>
+          <p style="color:#334155;">
+            Tu capital de <strong>20.8 kg perdidos</strong> sigue creciendo.  
+            Cada prenda que ahora te queda grande es un recordatorio de que tu cuerpo sigue cambiando, aun en las semanas difíciles.  
+            <strong>El progreso real nunca se detiene</strong>: simplemente a veces se reacomoda.  
+            Mantén el rumbo, porque la próxima semana verás cómo esa retención desaparece y tu energía vuelve a subir.
+          </p>
+        
+          <p style="margin-top:1em; color:#059669; font-weight:600; text-align:center;">
+            💪 No retrocediste. Solo tomaste impulso.
+          </p>
+        </div>
   </section>
 
-  <!-- Imagen keto + metas --><section class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-    <!-- Metas y Progreso (MODIFICADA) --><div class="card flex flex-col justify-center items-center p-6 bg-teal-50 border-teal-200">
-      <h3 class="text-2xl font-black mb-4 text-teal-700">Metas y Estrategia de Progreso</h3>
-      <ul class="space-y-3 text-base text-left w-full text-slate-800">
-        <li class="flex items-center gap-2"><span class="text-xl text-teal-600">✓</span> Bajar de 130 kg — <strong class="text-teal-700">Conseguido.</strong></li>
-        <li class="flex items-center gap-2"><span class="text-xl text-teal-600">✓</span> Perder más de 10 kg — <strong class="text-teal-700">Conseguido.</strong></li>
-        <li class="flex items-center gap-2"><span class="text-xl text-teal-600">✓</span> Romper 120 kg — <strong class="text-teal-700">Conseguido.</strong></li>
-        <li class="flex items-center gap-2"><span class="text-xl text-teal-600">✓</span> Perder 20 kg o más — <strong class="text-teal-700">¡Conseguido! (21.4 kg perdidos)</strong></li>
-        <!-- ¡META DE 115 KG CONSEGUIDA! --><li class="flex items-center gap-2"><span class="text-xl text-teal-600">✓</span> Romper la barrera de los 115 kg — <strong class="text-teal-700">¡CONSEGUIDO! (Peso actual 114.2 kg)</strong></li>
-        <li class="flex items-center gap-2"><span class="text-xl text-amber-500">🎯</span> **Próxima meta:** **&lt; 110 kg. ¡A solo 4.2 kg de distancia!</li>
-        <li class="flex items-center gap-2"><span class="text-xl text-slate-400">→</span> Siguientes: &lt; 105 kg y &lt; 100 kg.</li>
-      </ul>
-
-      <div class="mt-6 w-full pt-4 border-t border-teal-200">
-        <h4 class="text-lg font-bold mb-3 text-teal-800">Tips de Impulso Adicional:</h4>
-        <!-- BOLDING NORMALIZADO --><ul class="list-disc list-inside text-sm text-slate-700 space-y-2">
-          <li><strong>¡Sigue con esa mentalidad!</strong> El error no está en caer, sino en no levantarse. Ya probaste que puedes volver al plan.</li>
-          <li><strong>Hidratación Consciente:</strong> Aumenta la ingesta de agua pura y electrolitos, especialmente si tienes ayuno intermitente. Mejora la saciedad y el metabolismo.</li>
-          <li><strong>Prioriza el Sueño:</strong> Asegúrate de dormir 7-8 horas. Un buen descanso regula las hormonas del hambre (grelina/leptina), clave en Keto.</li>
-          <li><strong>Gestión de Estrés:</strong> El estrés crónico libera cortisol, que puede ralentizar la pérdida de peso. Dedica tiempo a la relajación o meditación.</li>
-        </ul>
-      </div>
-    </div>
-    
-    <div class="card p-4 bg-white"> <!-- Fondo de la tarjeta ahora es blanco --><img src="https://raw.githubusercontent.com/GuillermoOseguera/gopketo/main/gopketoV2.png" alt="Imagen motivacional de dieta Keto" class="mx-auto w-full max-w-sm rounded-2xl shadow-xl object-contain"/> <!-- object-contain para que la imagen no se recorte y se ajuste --><div class="mt-6 pt-4 border-t border-slate-100 text-center">
-        <h4 class="text-lg font-bold mb-2 text-teal-800">Ventajas de la Dieta Cetogénica:</h4>
-        <p class="text-base text-slate-700 leading-relaxed text-justify">
-          La dieta Keto es mucho más que una simple reducción de carbohidratos. Su principal ventaja es el cambio metabólico que fuerza al cuerpo a utilizar grasa (cetonas) como fuente primaria de energía, proceso conocido como cetosis. 
-          Este estado no solo promueve una quema de grasa más eficiente y continua, sino que también ofrece beneficios notables para tu bienestar diario. Al estabilizar los niveles de azúcar en la sangre, experimentarás una mayor saciedad a lo largo del día, lo que facilita el control de las porciones y reduce los antojos. Además, el uso de cetonas como combustible cerebral proporciona una **energía más estable y sostenida, lo que se traduce en mayor claridad mental, concentración y menos fatiga a lo largo de tu jornada.
-        </p>
-      </div>
-    </div>
-  </section>
-
-
-  <!-- Tu historia hasta hoy (SECCIÓN AMPLIADA, SUBIDA ANTES DE COMENTARIOS) --><section class="card mt-6">
-    <h2 class="text-2xl font-black mb-4 border-b pb-2 text-teal-700">Tu Historia de Éxito: Disciplina Inquebrantable</h2>
+  <!-- Análisis Comparativo Estratégico (SECCIÓN NUEVA Y AMPLIADA) --><section class="card mt-6">
+    <h2 class="text-2xl font-black mb-4 border-b pb-2 text-teal-700">Análisis Estratégico: Tu Resiliencia es Invencible</h2>
     <p class="text-base text-slate-700 leading-relaxed mb-4">
-      Tu viaje de 17 semanas es un testimonio de disciplina inquebrantable. Has logrado una pérdida total de 21.4 kg, lo que se traduce en una caída de 6.7 puntos de IMC*(de Obesidad Mórbida 42.8 a Obesidad Grado II 36.1).
+      Tu viaje de 18 semanas es un logro de constancia superior a la media. A pesar de la subida de esta semana (+0.6 kg), tu pérdida total de 20.8 kg sigue siendo dramáticamente mejor que la de cualquier otra ruta de pérdida de peso en este periodo.
     </p>
 
     <!-- INICIO DE LA SECCIÓN REEMPLAZADA: Análisis Comparativo --><div class="space-y-6">
       <div class="text-base text-slate-700 leading-relaxed">
-        <h3 class="text-xl font-bold mb-3 text-teal-800">1. El Valor Incalculable de tus 21.4 kg Perdidos (Constancia vs. Abandono)</h3>
+        <h3 class="text-xl font-bold mb-3 text-teal-800">1. El Valor Incalculable de tus 20.8 kg Perdidos (Constancia vs. Abandono)</h3>
         <p>
-          En 17 semanas has perdido 21.4 kg, lo que representa un increíble 15.8% de tu peso inicial. Este resultado te coloca muy por encima de la media de cualquier dieta o tratamiento inicial no invasivo en ese mismo periodo. La mayoría de las personas que inician dietas restrictivas desisten antes de los dos meses (entre el 20%$ y 40%$ abandonan en las primeras 8 semanas), lo que hace de tu constancia de 17 semanas un logro de disciplina incalculable. 
+          En 18 semanas has perdido 20.8 kg, lo que representa un increíble 15.3% de tu peso inicial. Este resultado te coloca muy por encima de la media de cualquier dieta o tratamiento inicial no invasivo en ese mismo periodo. La mayoría de las personas que inician dietas restrictivas **desisten antes de los dos meses** (entre el $20\%$ y $40\%$ abandonan en las primeras $8$ semanas), lo que hace de tu constancia de $18$ semanas un logro de disciplina incalculable. 
         </p>
 
         <p class="mt-4">
-          Tu Ventaja, Días Libres Incluidos: El hecho de que puedas tener días libres controlados (a veces no tan controlados) y aún así mantener un ritmo promedio de 1.26 kg/semana es la prueba de que estás construyendo un estilo de vida flexible. Los pequeños rebotes de agua que experimentaste solo demuestran que tu capacidad de regresar al plan es tu superpoder; esto te da sostenibilidad, algo que las dietas extremas no ofrecen.
+          <strong>Tu Ventaja, Días Libres Incluidos: </strong>El hecho de que puedas tener días libres (aunque esta vez el rebote de agua fue notable) y aún así mantener un ritmo promedio de 1.15kg/semana es la prueba de que estás construyendo un **estilo de vida flexible**. Los pequeños rebotes de agua que experimentaste solo demuestran que tu capacidad de regresar al plan es tu superpoder; esto te da **sostenibilidad**, algo que las dietas extremas no ofrecen.
         </p>
 
-        <h3 class="text-xl font-bold mb-3 mt-5 text-teal-800">2. Análisis Comparativo de Pérdida de Peso ($4$ Meses)</h3>
+        <h3 class="text-xl font-bold mb-3 mt-5 text-teal-800">2. Análisis Comparativo de Pérdida de Peso ($4.5$ Meses)</h3>
         <p>
-          Tu método (Dieta Keto con constancia y seguimiento) ha demostrado ser superior en rendimiento y sostenibilidad a muchos métodos populares y riesgosos en este periodo, para que dimenciones todo esto, mostrare las siguientes estadisticas:.
+          Tu método (Dieta Keto con constancia y seguimiento) ha demostrado ser superior en rendimiento y sostenibilidad a muchos métodos populares y riesgosos en este periodo.
         </p>
       </div>
 
       <!-- Gráfico Comparativo de Rendimiento (Elemento Interactivo) -->
       <div class="card p-4 bg-slate-50 border h-72">
-        <h3 class="text-lg font-semibold mb-3 text-slate-700">Tu % de Pérdida vs. la Media (en 4 meses)</h3>
+        <h3 class="text-lg font-semibold mb-3 text-slate-700">Tu % de Pérdida vs. la Media (en 18 semanas)</h3>
         <canvas id="comparisonChart"></canvas>
       </div>
       
       <!-- CUADRO DE CÁLCULO DE KILOS (NUEVO) -->
       <div class="mt-6 p-4 rounded-xl border border-teal-300 bg-teal-50/70 shadow-lg">
           <h4 class="text-lg font-extrabold text-teal-800 mb-2">📊 Esto es lo que significan esos porcentajes en KILOGRAMOS:</h4>
-          <p class="text-sm text-slate-700">Basado en tu peso inicial de 135.6 kg y 17 semanas de progreso:</p>
+          <p class="text-sm text-slate-700">Basado en tu peso inicial de **135.6 kg** y 18 semanas de progreso:</p>
           <ul class="list-disc list-inside ml-4 mt-2 space-y-1 text-base font-semibold">
-              <li class="text-green-700">Tu Progreso (Keto): -21.4 kg (15.8%) - Una pérdida enorme y sostenida por tu disciplina.</li>
-              <li class="text-blue-700">Los que usan Ozempic (Media): -10.2 kg (7.5%) - La media requiere asistencia farmacológica continua y tu resultado es el doble de bueno.</li>
-              <li class="text-amber-700">Aquellos que eligen una Dieta Tradicional (Media): -6.1 kg (4.5%) - Mucho menor, con alto riesgo de abandono.</li>
+              <li class="text-green-700">Tu Progreso (Keto): -20.8 kg (15.3%) - Tu pérdida sigue siendo espectacular y acumulativa.</li>
+              <li class="text-blue-700">Ozempic (Media): -10.2 kg (7.5%) - El Ozempic, en el mismo tiempo, te habría dado **menos de la mitad** de tu pérdida actual.</li>
+              <li class="text-amber-700">Dieta Tradicional (Media): -6.1 kg (4.5%) - Con las dietas tradicionales, hoy estarías apenas saliendo de la barrera de los 130 kg.</li>
           </ul>
-          <p class="text-xs italic text-teal-800 mt-3">Tu resultado es significativamente más alto que la media sin la necesidad de fármacos o poner en riesgo tu salud.</p>
+          <p class="text-xs italic text-teal-800 mt-3">Tu resultado es significativamente más alto que la media sin la necesidad de fármacos.</p>
       </div>
       
       <div class="text-base text-slate-700 leading-relaxed">
@@ -353,17 +420,17 @@
             <img src="https://raw.githubusercontent.com/GuillermoOseguera/gopketo/main/gopmini.png" 
                  alt="Miniatura de persona señalando" 
                  class="w-20 h-20 object-contain rounded-lg flex-none"
-                 onerror="this.onerror=null;this.src='https://placehold.co/80x80/2980b9/ffffff?text=SENIAL+IMG';"/>
+                 onerror="this.onerror=null;this.src='https://placehold.co/80x80/2980b9/ffffff?text=SEÑAL+IMG';"/>
             
             <div class="flex-1">
                 <p>
-                  <strong>ESCENARIO 1: Dieta Milagro</strong> (4.5% o -6.1 kg): Si hubieras optado por una dieta milagro, la probabilidad de abandono es de hasta 95% en menos de 1 año y el abandono promedio sucede antes de los 2 meses. Hoy, probablemente hubieras perdido solo 6.1 kg (4.5% de 135.6 kg) o menos, y con la alta probabilidad de haber sufrido el efecto rebote en la semana 8 o 12. El riesgo aquí es la pérdida de músculo, el daño metabólico y el trauma psicológico de fallar.
+                  <strong>ESCENARIO 1: Dieta Milagro (4.5% o -6.1 kg):</strong>  Si hubieras optado por una dieta milagro, la probabilidad de **abandono es de hasta 95% en 1 año y el abandono promedio sucede antes de los 2 meses. Hoy, probablemente hubieras perdido solo 6.1 kg (4.5% de 135.6 kg) o menos, y con la alta probabilidad de haber sufrido el **efecto rebote** en la semana 8 o 12. El riesgo aquí es la pérdida de músculo, el daño metabólico y el trauma psicológico de fallar.
                 </p>
                 <p class="mt-4">
-                  <strong>ESCENARIO 2: Fármacos GLP-1 (Ozempic)</strong>: Si hubieras elegido usar este farmaco, los estudios indican una pérdida media del 7.5% en 4 meses (lo que equivaldría a -10.2 kg para ti). El riesgo crucial es la dependencia y la reversión: al ser un tratamiento continuo, al suspenderlo, la pérdida de peso revierte rápidamente. Además, los efectos secundarios digestivos (náuseas, vómitos) son comunes y la pérdida suele ser mixta (grasa y músculo) y hay que tomar en cuenta que se requieren para este tiempo aproximadamente 5 plumas con un costo medio de $4,500 por pluma lo que seria un total de $24,500 pesos solo en el medicamento.
+                  <strong>ESCENARIO 2: Fármacos GLP-1 (Ozempic):</strong>  Los estudios indican una pérdida media del $\mathbf{7.5\%}$ en 4 meses (lo que equivaldría a -10.2 kg para ti). Esto en el tiempo que llevas, y recuerda que son más lentos en el inicio. El riesgo crucial es la **dependencia y la reversión**: al ser un tratamiento continuo, al suspenderlo, la pérdida de peso revierte rápidamente. Además, los **efectos secundarios** digestivos (náuseas, vómitos) son comunes y la pérdida suele ser mixta (grasa y músculo).
                 </p>
                 <p class="mt-4 font-extrabold text-green-700">
-                    ESCENARIO REAL (Tu Keto Flexible): Has perdido 21.4 kg (15.8%) en 17 semanas. Esto no solo supera la media de Ozempic en este periodo, sino que lo has hecho construyendo hábitos. Los días libres que te permites (y de los que regresas) demuestran que estás en un camino sostenible y que tu disciplina es un activo que no tiene efectos secundarios ni efecto rebote por dependencia a un químico. 
+                  <strong>ESCENARIO REAL (Tu Keto Flexible):</strong>  Has perdido 20.8kg (15.3%) en 18 semanas. Esto no solo supera la media de Ozempic en este periodo, sino que lo has hecho **construyendo hábitos**. Los días libres que te permites (y de los que regresas) demuestran que estás en un camino **sostenible** y que tu disciplina es un activo que no tiene efectos secundarios ni efecto rebote por dependencia a un químico. 
                 </p>
             </div>
         </div>
@@ -372,7 +439,7 @@
 
     <h3 class="text-xl font-bold mb-3 text-teal-800 mt-6">¡Tu Camino es Sostenible! La Resiliencia es tu Superpoder</h3>
     <p class="text-base text-slate-700 leading-relaxed">
-        ¡Felicidades! Has superado el hito de los 20 kg perdidos y has roto la barrera de los 115 kg. La Próxima Gran Meta de < 110 kg está a la vista y cuando lo logres tu recompensa sera una gran hamburguesa con queso y papas a la francesa.
+      <strong>¡Felicidades! Has superado el hito de los 20 kg perdidos</strong>  y has roto la barrera de los 115 kg. La Próxima Gran Meta de <110 kg está a la vista.
         <br><br>
         Sigue enfocándote en la disciplina que te trajo hasta aquí. Celebra el hecho de que la ropa te queda mejor, pues esa sensación es mucho más confiable que cualquier número en la balanza. Recuerda la lección de esta semana: el progreso es una línea, no un punto. ¡Tu esfuerzo es innegable y tu capacidad de resiliencia es tu mayor activo!
     </p>
@@ -414,7 +481,7 @@
       </div>
       <div class="comment-item">
         <span class="comment-icon">🏆</span>
-        <p><strong>11–18 ago:</strong> −0.9 kg. Superaste 123.7 kg, tu peso mas bajo en todo este año. Consistencia real.</p>
+        <p><strong>11–18 ago:</strong> −0.9 kg. Superaste 123.7 kg, tu mínimo del año. Consistencia real.</p>
       </div>
       <div class="comment-item">
         <span class="comment-icon">🧘</span>
@@ -422,7 +489,7 @@
       </div>
       <div class="comment-item bg-amber-50 border-amber-400">
         <span class="comment-icon text-amber-500">✅</span>
-        <p><strong>25 aug–1 sep:</strong> 0.0 kg ( ya vez por atascarte en tus dias libres ). Aunque la báscula no cambió, seguramente lo notaste en talla. Lo importante: **no desististe**.</p>
+        <p><strong>25 aug–1 sep:</strong> **0.0 kg**. Aunque la báscula no cambió, seguramente lo notaste en talla. Lo importante: **no desististe**.</p>
       </div>
       <div class="comment-item">
         <span class="comment-icon">🎯</span>
@@ -442,26 +509,30 @@
       </div>
       <div class="comment-item bg-red-50 border-red-400">
         <span class="comment-icon text-red-500">🔄</span>
-        <p><strong>29 sep–06 oct:</strong> 0.5 kg. ¡Es totalmente normal! Esto fue una **fluctuación temporal** (retención de agua/sodio), no grasa real. No te desanimes, sigue firme.</p>
+        <p><strong>29 sep–06 oct:</strong> **+0.5 kg**. ¡Es totalmente normal! Esto fue una **fluctuación temporal** (retención de agua/sodio), no grasa real. No te desanimes, sigue firme.</p>
       </div>
       <div class="comment-item bg-teal-50 border-teal-400">
         <span class="comment-icon text-teal-500">🚀</span>
-        <p><strong>06–13 oct:</strong> **¡Espectacular regreso,  −1.9 kg! La subida anterior se corrigió porque al retomar el plan el jueves, tu cuerpo eliminó la retención de agua y continuó quemando grasa. **¡Felicidades por tu resiliencia!**</p>
+        <p><strong>06–13 oct:</strong> **¡Espectacular rebote de −1.9 kg!** La subida anterior se corrigió porque al retomar el plan el jueves, tu cuerpo eliminó la retención de agua y continuó quemando grasa. **¡Felicidades por tu resiliencia!**</p>
       </div>
       <div class="comment-item bg-teal-100 border-teal-400">
         <span class="comment-icon text-green-500">🎉</span>
         <p><strong>13–20 oct:</strong> **¡Meta de 115 kg SUPERADA! (−0.9 kg)**. Una semana sólida que valida tu esfuerzo. ¡La balanza te recompensó por volver a la disciplina. **Próxima parada: 110 kg**.</p>
       </div>
-      <!-- NUEVO COMENTARIO --><div class="comment-item bg-amber-50 border-amber-400">
-        <span class="comment-icon text-amber-500">🧘</span>
-        <p><strong>20–27 oct:</strong> **Consolidación (−0.1 kg)**. El peso bajó poco, pero la ropa más holgada significa **pérdida de grasa**. ¡Es una semana de **reafirmación**! ¡Aprovecha la motivación de la ropa para seguir!</p>
+      <!-- NUEVO COMENTARIO --><div class="comment-item bg-red-50 border-red-400">
+        <span class="comment-icon text-red-500">❌</span>
+        <p><strong>20 oct–27 oct:</strong> **Consolidación (−0.1 kg)**. El peso bajó poco, pero la ropa más holgada significa **pérdida de grasa**. ¡Es una semana de **reafirmación**! ¡Aprovecha la motivación de la ropa para seguir!</p>
+      </div>
+       <!-- NUEVO COMENTARIO --><div class="comment-item bg-red-50 border-red-400">
+        <span class="comment-icon text-red-500">⬆️</span>
+        <p><strong>27 oct–03 nov:</strong> **+0.6 kg**. Subida por **ruptura de dieta** (jueves a domingo: mole, tamales, etc.). Esto es **retención de agua y glucógeno** por carbohidratos/sodio, ¡NO grasa! El hecho de que la ropa te quede holgada lo confirma. **¡Vuelta a la cetosis para corregir!**</p>
       </div>
     </div>
   </section>
 
 </main>
 <footer class="bg-slate-900 text-white text-center py-8 rounded-t-[2.5rem] mt-12">
-  <p class="text-sm opacity-80 mb-2">Hecho para Goplemmings — Octubre 2025</p>
+  <p class="text-sm opacity-80 mb-2">Hecho para Goplemmings — Noviembre 2025 | Reto Barba Cero: <span id="footerShaveStatus">4.8 kg para la Meta (100.0 kg)</span></p>
 </footer>
 
 <script>
@@ -469,10 +540,10 @@
   // Función principal para inicializar el dashboard
   function initializeDashboard() {
       // --------------------------------------------------------------------------------
-      // DATOS ACTUALIZADOS: NUEVO PESO (114.2 KG) EL 27 DE OCTUBRE
+      // DATOS ACTUALIZADOS: NUEVO PESO (114.8 KG) EL 03 DE NOVIEMBRE
       // --------------------------------------------------------------------------------
-      const labels=['1 Jul','8 Jul','14 Jul','21 Jul','28 Jul','4 Ago','11 Ago','18 Ago','25 Ago','1 Sep','8 Sep','13 Sep','22 Sep','29 Sep', '6 Oct', '13 Oct', '20 Oct', '27 Oct'];
-      const pesos=[135.6,130.7,129.6,129.1,127.6,126.1,124.2,123.0,122.5,122.5,119.6,118.0,117.6,116.6, 117.1, 115.2, 114.3, 114.2];
+      const labels=['1 Jul','8 Jul','14 Jul','21 Jul','28 Jul','4 Ago','11 Ago','18 Ago','25 Ago','1 Sep','8 Sep','13 Sep','22 Sep','29 Sep', '6 Oct', '13 Oct', '20 Oct', '27 Oct', '3 Nov'];
+      const pesos=[135.6,130.7,129.6,129.1,127.6,126.1,124.2,123.0,122.5,122.5,119.6,118.0,117.6,116.6, 117.1, 115.2, 114.3, 114.2, 114.8];
       
       // Cálculos iniciales
       const start=pesos[0], current=pesos[pesos.length-1];
@@ -510,6 +581,46 @@
       bar.textContent=`${remaining} kg restantes (Meta ${targetWeight} kg)`;
 
 
+      // --------------------------------------------------------------------------------
+      // LÓGICA DEL RETO BARBA CERO (META 100.0 KG)
+      // --------------------------------------------------------------------------------
+      const FINAL_TARGET = 100.0;
+      const TOTAL_WEIGHT_TO_LOSE = start - FINAL_TARGET; // 135.6 - 100.0 = 35.6 kg
+      const WEIGHT_LOST_FOR_CHALLENGE = start - current; // 135.6 - 114.8 = 20.8 kg
+      const CHAL_PCT = Math.min(100, (WEIGHT_LOST_FOR_CHALLENGE / TOTAL_WEIGHT_TO_LOSE) * 100); // 20.8/35.6 = 58.4%
+      const CHAL_REMAINING = Math.max(0, current - FINAL_TARGET).toFixed(1); // 114.8 - 100.0 = 14.8 kg
+
+      const progBar = document.getElementById('beardProgressBar');
+      const progText = document.getElementById('beardProgressText');
+      const iconMessage = document.getElementById('beardMessage');
+      const statusText = document.getElementById('shaveStatusText');
+      const footerStatus = document.getElementById('footerShaveStatus');
+      const beardImage = document.getElementById('beardImage');
+      const polaroidContainer = document.getElementById('polaroidContainer');
+
+
+      progBar.style.width = `${CHAL_PCT}%`;
+      progText.textContent = `${CHAL_REMAINING} kg restantes para la Meta de ${FINAL_TARGET} kg`;
+      footerStatus.textContent = `${CHAL_REMAINING} kg para la Meta (100.0 kg)`;
+
+      // Lógica de visualización de la imagen y el estado
+      if (current <= FINAL_TARGET) {
+          beardImage.src = 'https://placehold.co/140x160/10b981/ffffff?text=¡RASURADO!'; // Imagen de celebración o reemplazo final
+          polaroidContainer.classList.add('border-green-500');
+          iconMessage.textContent = '¡RETO CONSEGUIDO! Es hora del cambio total. 🎉';
+          statusText.textContent = '¡CONSEGUIDO!';
+          progBar.classList.remove('bg-teal-500');
+          progBar.classList.add('bg-green-600');
+      } else {
+          // La URL RAW ya está establecida en el HTML: gopmini.png
+          iconMessage.textContent = `Aún faltan ${CHAL_REMAINING} kg. ¡Sigue la disciplina!`;
+          statusText.textContent = 'PENDIENTE';
+          progBar.classList.remove('bg-green-600');
+          progBar.classList.add('bg-teal-500');
+          polaroidContainer.classList.remove('border-green-500');
+      }
+
+
       // Pérdida semanal
       const weeklyLoss = [];
       const comments = [
@@ -529,7 +640,8 @@
           "29 sep–06 oct: +0.5 kg. Es una fluctuación de agua y electrolitos. La pérdida neta acumulada es de 18.5 kg. Necesitas motivación para no desanimarte.",
           "06–13 oct: -1.9 kg. Recuperaste la pérdida de agua y regresaste a la cetosis, demostrando una resiliencia impresionante a pesar del desánimo.",
           "13–20 oct: -0.9 kg. Meta de 115 kg superada, demostrando consistencia y disciplina.",
-          "20–27 oct: -0.1 kg. Consolidación de grasa."
+          "20–27 oct: -0.1 kg. Consolidación de grasa.",
+          "27 oct–03 nov: +0.6 kg. Subida por ruptura de dieta. Retención de agua/glucógeno."
       ];
 
       for(let i = 1; i < pesos.length; i++){
@@ -542,32 +654,32 @@
 
       const motivationPhrases = [
           {
-              text: "El éxito es la suma de pequeños esfuerzos repetidos día tras día.",
-              subtitle: "— Robert Collier. Tu disciplina diaria es tu mayor logro.",
+              text: "No dejes que una sola semana defina tu viaje. El progreso se mide en la tendencia, y la tuya es invencible.",
+              subtitle: "— Goplemmings Coach. ¡Hoy decidiste volver a ser el dueño de tu progreso!",
           },
           {
-              text: "Nuestra mayor gloria no consiste en no caer nunca, sino en levantarnos cada vez que caemos.",
-              subtitle: "— Confucio. Tu resiliencia después de la semana pasada lo prueba.",
+              text: "La disciplina es el puente entre tus metas y tus logros.",
+              subtitle: "— Jim Rohn. Tu acto de volver a la dieta después de los días libres es la definición de disciplina.",
           },
           {
-              text: "La calidad nunca es un accidente; siempre es el resultado de un esfuerzo inteligente.",
-              subtitle: "— John Ruskin. Tu plan está funcionando y los resultados son la prueba.",
-          },
-          {
-              text: "La paciencia y la perseverancia tienen un efecto mágico ante el que las dificultades desaparecen.",
-              subtitle: "— John Quincy Adams. La meseta es temporal; la tendencia es imparable.",
+              text: "El dolor de la disciplina pesa onzas; el dolor del arrepentimiento pesa toneladas.",
+              subtitle: "— Jim Rohn. Abraza la disciplina, ¡los resultados de la próxima semana lo valdrán!",
           },
           {
               text: "Solo aquellos que se atreven a sufrir mucho pueden lograr mucho.",
-              subtitle: "— John F. Kennedy. Cada sacrificio hoy es una victoria en tu futuro.",
+              subtitle: "— John F. Kennedy. Sigue empujando, estás construyendo una versión imparable de ti mismo.",
           },
           {
               text: "Págate a ti mismo primero con disciplina. Tu salud es tu mayor riqueza.",
-              subtitle: "— El hombre más rico de Babilonia. Invertir en ti es la mejor estrategia.",
+              subtitle: "— El hombre más rico de Babilonia. Tu cuerpo ya te está pagando con ropa holgada.",
+          },
+          {
+              text: "La paciencia y la perseverancia tienen un efecto mágico ante el que las dificultades desaparecen.",
+              subtitle: "— John Quincy Adams. La subida es solo agua; tu pérdida de grasa es constante.",
           },
           {
               text: "Lo que obtienes al alcanzar tus metas no es tan importante como en lo que te conviertes.",
-              subtitle: "— Zig Ziglar. Eres una persona de constancia inquebrantable.",
+              subtitle: "— Zig Ziglar. Eres una persona de constancia inquebrantable que ha perdido 20.8 kg.",
           }
       ];
 
@@ -758,8 +870,8 @@
           const data = {
               labels: ['Tu Progreso (Keto)', 'Ozempic (Media)', 'Dieta Tradicional (Media)'],
               datasets: [{
-                  label: 'Pérdida % de Peso (17 Semanas)',
-                  data: [lossPercentage, 7.5, 4.5], // Tu 15.8%, Ozempic mock 7.5%, Dieta Trad. mock 4.5%
+                  label: 'Pérdida % de Peso (18 Semanas)',
+                  data: [lossPercentage, 7.5, 4.5], // Tu 15.3%, Ozempic mock 7.5%, Dieta Trad. mock 4.5%
                   backgroundColor: ['#10b981', '#3b82f6', '#f59e0b'], // Green, Blue, Amber
                   borderColor: ['#0d9488', '#2563eb', '#d97706'],
                   borderWidth: 1,
